@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="34" edition="1.27">
+    <title>Transmission of Monoradar Service Messages</title>
+    <date>2007-05-01</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="000" title="Message Type">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="1">North marker message</value>
+                    <value val="2">Sector crossing message</value>
+                    <value val="3">Geographical filtering message</value>
+                    <value val="4">Jamming strobe message</value>
+                </content>
+            </variation>
+            <definition>
+                This Data Item allows for a more convenient handling of
+                the messages at the receiver side by further defining
+                the type of transaction.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. In applications where transactions of various
+                       types are exchanged, the Message Type Data Item facilitates the
+                       proper message handling at the receiver side.
+                    2. All Message Type values are reserved for common standard use.
+                    3. The list of items present for the four message types is defined in
+                       the following table.
+
+                       M stands for mandatory, O for optional, X for never present.
+
+                       TODO: message types table
+            </remark>
+        </item>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the radar station from which the data are received.
+            </definition>
+            <remark>
+                Note:
+                    - The up-to-date list of SACs is published on the
+                      EUROCONTROL Web Site (http://www.eurocontrol.int/asterix).
+            </remark>
+        </item>
+        <item name="020" title="Sector Number">
+            <variation type="element" size="8">
+                <content type="quantity" signed="false" scaling="360" fractional_bits="8" unit="deg">
+                </content>
+            </variation>
+            <definition>
+                Eight most significant bits of the antenna azimuth defining a particular azimuth sector.
+            </definition>
+        </item>
+        <item name="030" title="Time of Day">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping expressed as UTC time.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The time of day value is reset to zero each day at midnight.
+            </remark>
+        </item>
+        <item name="041" title="Antenna Rotation Speed">
+            <variation type="element" size="16">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Antenna rotation period as measured between two consecutive North crossings
+                or as averaged during a period of time.
+            </definition>
+            <remark>
+                Notes:
+
+                    - This item represents the antenna rotation period as measured by the
+                      radar station between two consecutive North crossings, or a calculated
+                      antenna rotation speed as averaged during a period of time, or during a
+                      number of antenna rotation scans.
+            </remark>
+        </item>
+        <item name="050" title="System Configuration and Status">
+            <variation type="compound">
+                <item name="COM" title="Common Part">
+                    <variation type="group">
+                        <items>
+                            <item name="NOGO" title="Operational Release Status of the System">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">System is released for operational use</value>
+                                        <value val="1">Operational use of System is inhibited, i.e. the data shall be discarded by an operational SDPS</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="RDPC" title="Radar Data Processor Chain Selection Status">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">RDPC-1 selected</value>
+                                        <value val="1">RDPC-2 selected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="RDPR" title="Event to signal a reset/restart of the selected Radar Data Processor Chain, i.e. expect a new assignment of track numbers">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Default situation</value>
+                                        <value val="1">Reset of RDPC</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVLRDP" title="Radar Data Processor Overload Indicator">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Default, no overload</value>
+                                        <value val="1">Overload in RDP</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVLXMT" title="Transmission Subsystem Overload Status">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Default, no overload</value>
+                                        <value val="1">Overload in transmission subsystem</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MSC" title="Monitoring System Connected Status">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Monitoring system connected</value>
+                                        <value val="1">Monitoring system disconnected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TSV" title="Time Source Validity">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Valid</value>
+                                        <value val="1">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                        </items>
+                    </variation>
+                </item>
+                <spare />
+                <spare />
+                <item name="PSR" title="Specific Status information for a PSR sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="ANT" title="Selected antenna">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Antenna 1</value>
+                                        <value val="1">Antenna 2</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="CHAB" title="Channel A/B selection status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">No channel selected</value>
+                                        <value val="1">Channel A only selected</value>
+                                        <value val="2">Channel B only selected</value>
+                                        <value val="3">Diversity mode ; Channel A and B selected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVL" title="Overload condition">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No overload</value>
+                                        <value val="1">Overload</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MSC" title="Monitoring System Connected Status">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Monitoring system connected</value>
+                                        <value val="1">Monitoring system disconnected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="3" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="SSR" title="Specific Status information for a SSR sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="ANT" title="Selected antenna">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Antenna 1</value>
+                                        <value val="1">Antenna 2</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="CHAB" title="Channel A/B selection status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">No channel selected</value>
+                                        <value val="1">Channel A only selected</value>
+                                        <value val="2">Channel B only selected</value>
+                                        <value val="3">Invalid combination</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVL" title="Overload condition">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No overload</value>
+                                        <value val="1">Overload</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MSC" title="Monitoring System Connected Status:">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Monitoring system connected</value>
+                                        <value val="1">Monitoring system disconnected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="3" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="MDS" title="Specific Status information for a Mode S sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="ANT" title="Selected antenna">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Antenna 1</value>
+                                        <value val="1">Antenna 2</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="CHAB" title="Channel A/B selection status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">No channel selected</value>
+                                        <value val="1">Channel A only selected</value>
+                                        <value val="2">Channel B only selected</value>
+                                        <value val="3">Illegal combination</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVLSUR" title="Overload condition">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No overload</value>
+                                        <value val="1">Overload</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MSC" title="Monitoring System Connected Status:">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Monitoring system connected</value>
+                                        <value val="1">Monitoring system disconnected</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="SCF" title="Channel A/B selection status for Surveillance Co-ordination Function">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Channel A in use</value>
+                                        <value val="1">Channel B in use</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="DLF" title="Channel A/B selection status for Data Link Function">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Channel A in use</value>
+                                        <value val="1">Channel B in use</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVLSCF" title="Overload in Surveillance Co-ordination Function">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No overload</value>
+                                        <value val="1">Overload</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="OVLDLF" title="Overload in Data Link Function">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No overload</value>
+                                        <value val="1">Overload</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="7" />
+                        </items>
+                    </variation>
+                </item>
+                <spare />
+            </variation>
+            <definition>
+                Information concerning the configuration and status of a System.
+            </definition>
+        </item>
+        <item name="060" title="System Processing Mode">
+            <variation type="compound">
+                <item name="COM" title="Common Part">
+                    <variation type="group">
+                        <items>
+                            <spare size="1" />
+                            <item name="REDRDP" title="Reduction Steps in use for an overload of the RDP">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No reduction active</value>
+                                        <value val="1">Reduction step 1 active</value>
+                                        <value val="2">Reduction step 2 active</value>
+                                        <value val="3">Reduction step 3 active</value>
+                                        <value val="4">Reduction step 4 active</value>
+                                        <value val="5">Reduction step 5 active</value>
+                                        <value val="6">Reduction step 6 active</value>
+                                        <value val="7">Reduction step 7 active</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="REDXMT" title="Reduction Steps in use for an overload of the Transmission subsystem">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No reduction active</value>
+                                        <value val="1">Reduction step 1 active</value>
+                                        <value val="2">Reduction step 2 active</value>
+                                        <value val="3">Reduction step 3 active</value>
+                                        <value val="4">Reduction step 4 active</value>
+                                        <value val="5">Reduction step 5 active</value>
+                                        <value val="6">Reduction step 6 active</value>
+                                        <value val="7">Reduction step 7 active</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                        </items>
+                    </variation>
+                </item>
+                <spare />
+                <spare />
+                <item name="PSR" title="Specific Processing Mode information for a PSR sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="POL" title="Polarization in use by PSR">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Linear polarization</value>
+                                        <value val="1">Circular polarization</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="REDRAP" title="Reduction Steps in use as result of an overload within the PSR subsystem">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No reduction active</value>
+                                        <value val="1">Reduction step 1 active</value>
+                                        <value val="2">Reduction step 2 active</value>
+                                        <value val="3">Reduction step 3 active</value>
+                                        <value val="4">Reduction step 4 active</value>
+                                        <value val="5">Reduction step 5 active</value>
+                                        <value val="6">Reduction step 6 active</value>
+                                        <value val="7">Reduction step 7 active</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="STC" title="Sensitivity Time Control Map in use">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">STC Map-1</value>
+                                        <value val="1">STC Map-2</value>
+                                        <value val="2">STC Map-3</value>
+                                        <value val="3">STC Map-4</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="2" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="SSR" title="Specific Processing Mode information for a SSR sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="REDRAD" title="Reduction Steps in use as result of an overload within the SSR subsystem">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No reduction active</value>
+                                        <value val="1">Reduction step 1 active</value>
+                                        <value val="2">Reduction step 2 active</value>
+                                        <value val="3">Reduction step 3 active</value>
+                                        <value val="4">Reduction step 4 active</value>
+                                        <value val="5">Reduction step 5 active</value>
+                                        <value val="6">Reduction step 6 active</value>
+                                        <value val="7">Reduction step 7 active</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="5" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="MDS" title="Specific Processing Mode information for a Mode S sensor">
+                    <variation type="group">
+                        <items>
+                            <item name="REDRAD" title="Reduction Steps in use as result of an overload within the Mode S subsystem">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No reduction active</value>
+                                        <value val="1">Reduction step 1 active</value>
+                                        <value val="2">Reduction step 2 active</value>
+                                        <value val="3">Reduction step 3 active</value>
+                                        <value val="4">Reduction step 4 active</value>
+                                        <value val="5">Reduction step 5 active</value>
+                                        <value val="6">Reduction step 6 active</value>
+                                        <value val="7">Reduction step 7 active</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="CLU" title="Cluster State">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Autonomous</value>
+                                        <value val="1">Not autonomous</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="4" />
+                        </items>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                Status concerning the processing options, in use during the last antenna
+                revolution, for the various Sensors, composing the System.
+            </definition>
+            <remark>
+                Notes:
+
+                    - Applicable to all defined secondary subfields. The actual mapping
+                      between the up to seven data reduction steps and their associated
+                      data reduction measures is not subject to standardisation.
+            </remark>
+        </item>
+        <item name="070" title="Message Count Values">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="TYP" title="Type of message counter">
+                            <variation type="element" size="5">
+                                <content type="table">
+                                    <value val="0">No detection (number of misses)</value>
+                                    <value val="1">Single PSR target reports</value>
+                                    <value val="2">Single SSR target reports (Non-Mode S)</value>
+                                    <value val="3">SSR+PSR target reports (Non-Mode S)</value>
+                                    <value val="4">Single All-Call target reports (Mode S)</value>
+                                    <value val="5">Single Roll-Call target reports (Mode S)</value>
+                                    <value val="6">All-Call + PSR (Mode S) target reports</value>
+                                    <value val="7">Roll-Call + PSR (Mode S) target reports</value>
+                                    <value val="8">Filter for Weather data</value>
+                                    <value val="9">Filter for Jamming Strobe</value>
+                                    <value val="10">Filter for PSR data</value>
+                                    <value val="11">Filter for SSR/Mode S data</value>
+                                    <value val="12">Filter for SSR/Mode S+PSR data</value>
+                                    <value val="13">Filter for Enhanced Surveillance data</value>
+                                    <value val="14">Filter for PSR+Enhanced Surveillance</value>
+                                    <value val="15">Filter for PSR+Enhanced Surveillance + SSR/Mode S data not in Area of Prime Interest</value>
+                                    <value val="16">Filter for PSR+Enhanced Surveillance + all SSR/Mode S data</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="COUNT" title="COUNTER">
+                            <variation type="element" size="11">
+                                <content type="integer" signed="false">
+                                </content>
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Message Count values, according the various types of messages, for the
+                last completed antenna revolution, counted between two North crossings
+            </definition>
+        </item>
+        <item name="090" title="Collimation Error">
+            <variation type="group">
+                <items>
+                    <item name="RNG" title="Range Error">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="7" unit="NM">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AZM" title="Azimuth Error">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="true" scaling="360" fractional_bits="14" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Averaged difference in range and in azimuth for the primary target position
+                with respect to the SSR target position as calculated by the radar station.
+            </definition>
+            <remark>
+                Notes:
+
+                    - Negative values are coded in two’s complement form.
+            </remark>
+        </item>
+        <item name="100" title="Generic Polar Window">
+            <variation type="group">
+                <items>
+                    <item name="RHOST" title="Rho start">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="8" unit="NM">
+                                <constrain type="le">256</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="RHOEND" title="Rho end">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="8" unit="NM">
+                                <constrain type="le">256</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="THETAST" title="Theta start">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="THETAEND" title="Theta end">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Geographical window defined in polar co-ordinates.
+            </definition>
+        </item>
+        <item name="110" title="Data Filter">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="0">Invalid value</value>
+                    <value val="1">Filter for Weather data</value>
+                    <value val="2">Filter for Jamming Strobe</value>
+                    <value val="3">Filter for PSR data</value>
+                    <value val="4">Filter for SSR/Mode S data</value>
+                    <value val="5">Filter for SSR/Mode S + PSR data</value>
+                    <value val="6">Enhanced Surveillance data</value>
+                    <value val="7">Filter for PSR+Enhanced Surveillance data</value>
+                    <value val="8">Filter for PSR+Enhanced Surveillance + SSR/Mode S data not in Area of Prime Interest</value>
+                    <value val="9">Filter for PSR+Enhanced Surveillance + all SSR/Mode S data</value>
+                </content>
+            </variation>
+            <definition>
+                Data Filter, which allows suppression of individual data types.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. This Data Item is often used in conjunction with I034/100 and
+                       represents a Data Filter for a specific geographical subarea.
+                       A Data Source may have zero, one or multiple data filters active at any time.
+                    2. If I034/110 is not accompanied with I034/100, then the Data Filter
+                       is valid throughout the total area of coverage.
+            </remark>
+        </item>
+        <item name="120" title="3D-Position Of Data Source.">
+            <variation type="group">
+                <items>
+                    <item name="HGT" title="Height of Data Source">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="m">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="LAT" title="Latitude">
+                        <variation type="element" size="24">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                <constrain type="ge">-90</constrain>
+                                <constrain type="le">90</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="LON" title="Longitude">
+                        <variation type="element" size="24">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                <constrain type="ge">-180</constrain>
+                                <constrain type="le">180</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                3D-Position of Data Source in WGS 84 Co-ordinates.
+            </definition>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>000</item>
+        <item>030</item>
+        <item>020</item>
+        <item>041</item>
+        <item>050</item>
+        <item>060</item>
+        <item>070</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+        <item>090</item>
+        <item>RE</item>
+        <item>SP</item>
+    </uap>
+</category>

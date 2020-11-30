@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="19" edition="1.3">
+    <title>Multilateration System Status Messages</title>
+    <date>2010-12-01</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="000" title="Message Type">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="1">Start of Update Cycle</value>
+                    <value val="2">Periodic Status Message</value>
+                    <value val="3">Event-triggered Status Message</value>
+                </content>
+            </variation>
+            <definition>
+                This Data Item allows for a more convenient handling of the
+                messages at the receiver side by further defining the type of
+                information.
+            </definition>
+            <remark>
+                NOTES:
+                  1. In applications where data of various types is exchanged, the Message
+                     Type Data Item facilitates the proper message handling at the receiver
+                     side.
+                  2. All Message Type values are reserved for common standard use.
+            </remark>
+        </item>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the system from which the data is received.
+            </definition>
+            <remark>
+                Note:
+                    - The up-to-date list of SACs is published on the
+                      EUROCONTROL Web Site (http://www.eurocontrol.int/asterix).
+            </remark>
+        </item>
+        <item name="140" title="Time of Day">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping expressed as UTC.
+            </definition>
+            <remark>
+                Note:
+
+                    The time of day value is reset to zero each day at midnight.
+            </remark>
+        </item>
+        <item name="550" title="System Status">
+            <variation type="group">
+                <items>
+                    <item name="NOGO" title="Operational Release Status of the System">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Operational</value>
+                                <value val="1">Degraded</value>
+                                <value val="2">NOGO</value>
+                                <value val="3">undefined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="OVL" title="Overload indicator">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No overload</value>
+                                <value val="1">Overload</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TSV" title="Time Source Validity">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">valid</value>
+                                <value val="1">invalid</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TTF" title="Test Target">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Test Target Operative</value>
+                                <value val="1">Test Target Failure</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="3" />
+                </items>
+            </variation>
+            <definition>
+                Information concerning the configuration and status of a System.
+            </definition>
+            <remark>
+                Note:
+
+                    A time source is considered as valid when either externally synchronised
+                    or running on a local oscillator within the required accuracy of UTC.
+            </remark>
+        </item>
+        <item name="551" title="Tracking Processor Detailed Status">
+            <variation type="group">
+                <items>
+                    <item name="TP1A" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Standby</value>
+                                <value val="1">Exec</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP1B" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Faulted</value>
+                                <value val="1">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP2A" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Standby</value>
+                                <value val="1">Exec</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP2B" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Faulted</value>
+                                <value val="1">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP3A" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Standby</value>
+                                <value val="1">Exec</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP3B" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Faulted</value>
+                                <value val="1">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP4A" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Standby</value>
+                                <value val="1">Exec</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TP4B" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Faulted</value>
+                                <value val="1">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the configuration and status of the Tracking processors.
+            </definition>
+            <remark>
+                Note:
+
+                    Both Bits of one TP set to zero means, that this TP is not used
+                    in the system.
+            </remark>
+        </item>
+        <item name="552" title="Remote Sensor Detailed Status">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="RSI" title="8-bit Identification number of RS">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <spare size="1" />
+                        <item name="RS1090" title="Receiver 1090 MHz">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">Not present</value>
+                                    <value val="1">present</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="TX1030" title="Transmitter 1030 MHz">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">Not present</value>
+                                    <value val="1">present</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="TX1090" title="Transmitter 1090 MHz">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">Not present</value>
+                                    <value val="1">present</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="RSS" title="RS Status">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">Faulted</value>
+                                    <value val="1">Good</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="RSO" title="RS Operational">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">Offline</value>
+                                    <value val="1">Online</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <spare size="2" />
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Information concerning the configuration and status of the Remote Sensors (RS)
+            </definition>
+        </item>
+        <item name="553" title="Reference Transponder Detailed Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="REFTR1" title="Ref Trans 1 Status">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="1">Warning</value>
+                                <value val="2">Faulted</value>
+                                <value val="3">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="2" />
+                    <item name="REFTR2" title="Ref Trans 2 Status">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="1">Warning</value>
+                                <value val="2">Faulted</value>
+                                <value val="3">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                    <item name="REFTR3" title="Ref Trans 3 Status">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="1">Warning</value>
+                                <value val="2">Faulted</value>
+                                <value val="3">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="2" />
+                    <item name="REFTR4" title="Ref Trans 4 Status">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="1">Warning</value>
+                                <value val="2">Faulted</value>
+                                <value val="3">Good</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                </items>
+            </variation>
+            <definition>
+                Information concerning the configuration and status of the Reference Transponder.
+            </definition>
+        </item>
+        <item name="600" title="Position of the MLT System Reference Point">
+            <variation type="group">
+                <items>
+                    <item name="LAT" title="Latitude">
+                        <variation type="element" size="32">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="30" unit="deg">
+                                <constrain type="ge">-90</constrain>
+                                <constrain type="le">90</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="LON" title="Longitude">
+                        <variation type="element" size="32">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="30" unit="deg">
+                                <constrain type="ge">-180</constrain>
+                                <constrain type="lt">180</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Position of the MLT reference point in WGS-84 Coordinates.
+            </definition>
+        </item>
+        <item name="610" title="Height of the MLT System Reference Point">
+            <variation type="element" size="16">
+                <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="m">
+                    <constrain type="ge">-8192</constrain>
+                    <constrain type="le">8192</constrain>
+                </content>
+            </variation>
+            <definition>
+                Height of the MLT system reference point in two’s complement form.
+                The height shall use mean sea level as the zero reference level.
+            </definition>
+        </item>
+        <item name="620" title="WGS-84 Undulation">
+            <variation type="element" size="8">
+                <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="m">
+                </content>
+            </variation>
+            <definition>
+                WGS-84 undulation value of the MLT system reference point, in meters.
+                Geoid undulation value is the difference between the ellipsoidal height
+                and the height above mean sea level
+            </definition>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>000</item>
+        <item>140</item>
+        <item>550</item>
+        <item>551</item>
+        <item>552</item>
+        <item>553</item>
+        <item>600</item>
+        <item>610</item>
+        <item>620</item>
+        <item>-</item>
+        <item>-</item>
+        <item>RE</item>
+        <item>SP</item>
+    </uap>
+</category>

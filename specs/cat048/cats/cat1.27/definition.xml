@@ -1,0 +1,1437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="48" edition="1.27">
+    <title>Monoradar Target Reports</title>
+    <date>2020-06-18</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the radar station from which the data is received.
+            </definition>
+            <remark>
+                Note:
+                    - The up-to-date list of SACs is published on the
+                      EUROCONTROL Web Site (http://www.eurocontrol.int/asterix).
+            </remark>
+        </item>
+        <item name="020" title="Target Report Descriptor">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="TYP" title="">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No detection</value>
+                                <value val="1">Single PSR detection</value>
+                                <value val="2">Single SSR detection</value>
+                                <value val="3">SSR + PSR detection</value>
+                                <value val="4">Single ModeS All-Call</value>
+                                <value val="5">Single ModeS Roll-Call</value>
+                                <value val="6">ModeS All-Call + PSR</value>
+                                <value val="7">ModeS Roll-Call +PSR</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SIM" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Actual target report</value>
+                                <value val="1">Simulated target report</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="RDP" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Report from RDP Chain 1</value>
+                                <value val="1">Report from RDP Chain 2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SPI" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Absence of SPI</value>
+                                <value val="1">Special Position Identification</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="RAB" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Report from aircraft transponder</value>
+                                <value val="1">Report from field monitor (fixed transponder)</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TST" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Real target report</value>
+                                <value val="1">Test target report</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ERR" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No Extended Range</value>
+                                <value val="1">Extended Range present</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="XPP" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No X-Pulse present</value>
+                                <value val="1">X-Pulse present</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ME" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No military emergency</value>
+                                <value val="1">Military emergency</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MI" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No military identification</value>
+                                <value val="1">Military identification</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="FOEFRI" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">No Mode 4 interrogation</value>
+                                <value val="1">Friendly target</value>
+                                <value val="2">Unknown target</value>
+                                <value val="3">No reply</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Type and properties of the target report.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. For Mode S aircraft, the SPI information is also contained in I048/230.
+                    2. To bits 3/2 (FOE/FRI): IFF interrogators supporting a three level
+                       classification of the processing of the Mode 4 interrogation result
+                       shall encode the detailed response information in data item M4E of
+                       the Reserved Expansion Field of category 048. In this case the value
+                       for FOE/FRI in I048/020 shall be set to “00”.
+                       However, even those interrogators shall use I048/020 to encode the information “No reply”.
+                    3. To bit 6 (XPP): This bit shall always be set when the X-pulse has
+                       been extracted, independent from the Mode it was extracted with.
+                    4. To bit 7 (ERR): This bit set to “1” indicates that the range of the
+                       target is beyond the maximum range in data item I048/040.In this
+                       case – and this case only - the ERR Data Item in the Reserved
+                       Expansion Field shall provide the range value of the Measured
+                       Position in Polar Coordinates.
+            </remark>
+        </item>
+        <item name="030" title="Warning/Error Conditions and Target Classification">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="CODE" title="">
+                        <variation type="element" size="7">
+                            <content type="table">
+                                <value val="0">Not defined; never used.</value>
+                                <value val="1">Multipath Reply (Reflection)</value>
+                                <value val="2">Reply due to sidelobe interrogation/reception</value>
+                                <value val="3">Split plot</value>
+                                <value val="4">Second time around reply</value>
+                                <value val="5">Angel</value>
+                                <value val="6">Slow moving target correlated with road infrastructure (terrestrial vehicle)</value>
+                                <value val="7">Fixed PSR plot</value>
+                                <value val="8">Slow PSR target</value>
+                                <value val="9">Low quality PSR plot</value>
+                                <value val="10">Phantom SSR plot</value>
+                                <value val="11">Non-Matching Mode-3/A Code</value>
+                                <value val="12">Mode C code / Mode S altitude code abnormal value compared to the track</value>
+                                <value val="13">Target in Clutter Area</value>
+                                <value val="14">Maximum Doppler Response in Zero Filter</value>
+                                <value val="15">Transponder anomaly detected</value>
+                                <value val="16">Duplicated or Illegal Mode S Aircraft Address</value>
+                                <value val="17">Mode S error correction applied</value>
+                                <value val="18">Undecodable Mode C code / Mode S altitude code</value>
+                                <value val="19">Birds</value>
+                                <value val="20">Flock of Birds</value>
+                                <value val="21">Mode-1 was present in original reply</value>
+                                <value val="22">Mode-2 was present in original reply</value>
+                                <value val="23">Plot potentially caused by Wind Turbine</value>
+                                <value val="24">Helicopter</value>
+                                <value val="25">Maximum number of re-interrogations reached (surveillance information)</value>
+                                <value val="26">Maximum number of re-interrogations reached (BDS Extractions)</value>
+                                <value val="27">BDS Overlay Incoherence</value>
+                                <value val="28">Potential BDS Swap Detected</value>
+                                <value val="29">Track Update in the Zenithal Gap</value>
+                                <value val="30">Mode S Track re-acquired</value>
+                                <value val="31">Duplicated Mode 5 Pair NO/PIN detected</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Warning/error conditions detected by a radar station for the target report
+                involved. Target Classification information for the target involved.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. It has to be stressed that a series of one or more codes can
+                       be reported per target report.
+                    2. Data conveyed in this item are of secondary importance, and
+                       can generally also be derived from the processing of mandatory items.
+                    3. Definitions can be found in SUR.ET1.ST03.1000-STD-01-01 Radar
+                       Sensor Performance Analysis.
+                    4. Values 25 to 30 have been defined to comply with the updated
+                       European Mode S Specification (EMS) and to provide the possibility
+                       to report the following information:
+
+                           - Code 25: the maximum number of permitted re-interrogations to
+                             acquire the surveillance information has been reached;
+                           - Code 26: the maximum number of permitted re-interrogations to
+                             extract BDS Registers has been reached;
+                           - Code 27: inconsistency detected between the contents of the
+                             message and the BDS register overlayed;
+                           - Code 28: a BDS swap has been detected and the respective information
+                             has been discarded;
+                           - Code 29: the track has been updated while being in the zenithal
+                             gap (also referred to as “Cone of Silence”);
+                           - Code 30: the radar had lost track of an aircraft and subsequently
+                             re-acquired it.
+            </remark>
+        </item>
+        <item name="040" title="Measured Position in Polar Co-ordinates">
+            <variation type="group">
+                <items>
+                    <item name="RHO" title="">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="8" unit="NM">
+                                <constrain type="lt">256</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="THETA" title="">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Measured position of an aircraft in local polar co-ordinates.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. In case of no detection, the extrapolated position expressed in slant
+                       polar co-ordinates may be sent, except for a track cancellation message.
+                       No detection is signalled by the TYP field set to zero in I048/020
+                       Target Report Descriptor.
+                    2. This item represents the measured target position of the plot, even
+                       if associated with a track, for the present antenna scan. It is
+                       expressed in polar co-ordinates in the local reference system,
+                       centred on the radar station.
+                    3. In case of combined detection by a PSR and an SSR, then the SSR
+                       position is sent.
+                    4. For targets having a range beyond the maximum range the data item
+                       “Extended Range Report” has been added to the Reserved Expansion
+                       Field of category 048. The presence of this data item is indicated
+                       by the ERR bit set to one in data item I048/020, first extension.
+                       The ERR data item shall only be sent if the value of RHO is equal
+                       to or greater than 256NM.
+                       Please note that if this data item is used, the Encoding Rule to
+                       data item I048/040 still applies, meaning that the extra item in
+                       the Reserved Expansion Field shall be transmitted in addition to
+                       data item I048/040.
+                       If the Extended Range Report item in the Reserved Expansion Field
+                       is used, it is recommended to set the value of RHO in data item
+                       I048/040 to its maximum, meaning bits 32/17 all set to 1.
+            </remark>
+        </item>
+        <item name="042" title="Calculated Position in Cartesian Co-ordinates">
+            <variation type="group">
+                <items>
+                    <item name="X" title="X-Component">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="7" unit="NM">
+                                <constrain type="ge">-256</constrain>
+                                <constrain type="le">256</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="Y" title="X-Component">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="7" unit="NM">
+                                <constrain type="ge">-256</constrain>
+                                <constrain type="le">256</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated position of an aircraft in Cartesian co-ordinates.
+            </definition>
+        </item>
+        <item name="050" title="Mode-2 Code in Octal Representation">
+            <variation type="group">
+                <items>
+                    <item name="V" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="L" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Mode-2 code as derived from the reply of the transponder</value>
+                                <value val="1">Smoothed Mode-2 code as provided by a local tracker</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                    <item name="MODE2" title="Mode-2 code in Octal Representation">
+                        <variation type="element" size="12">
+                            <content type="string" variation="octal" />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Reply to Mode-2 interrogation.
+            </definition>
+            <remark>
+                Notes:
+
+                    - Bit 15 has no meaning in the case of a smoothed Mode-2 and is set
+                      to 0 for a calculated track.
+            </remark>
+        </item>
+        <item name="055" title="Mode-1 Code in Octal Representation">
+            <variation type="group">
+                <items>
+                    <item name="V" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="L" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Mode-1 code as derived from the reply of the transponder</value>
+                                <value val="1">Smoothed Mode-1 code as provided by a local tracker</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MODE1" title="Mode-1 code">
+                        <variation type="element" size="5">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Reply to Mode-1 interrogation.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Bit 7 has no meaning in the case of a smoothed Mode-1 and is set
+                       to 0 for a calculated track.
+                    2. The values of the bits for V, G, L, A4, A2, A1, B2 and B1 shall be
+                       identical to the values of the corresponding bits in subfield #5
+                       of data item “MD5 – Mode 5 Reports” and in subfield #5 of data
+                       item “MD5 – Mode 5 Reports, New Format” in the Reserved Expansion Field.
+            </remark>
+        </item>
+        <item name="060" title="Mode-2 Code Confidence Indicator">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="QA4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A4</value>
+                                <value val="1">Low quality pulse A4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A2</value>
+                                <value val="1">Low quality pulse A2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A1</value>
+                                <value val="1">Low quality pulse A1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B4</value>
+                                <value val="1">Low quality pulse B4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B2</value>
+                                <value val="1">Low quality pulse B2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B1</value>
+                                <value val="1">Low quality pulse B1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C4</value>
+                                <value val="1">Low quality pulse C4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C2</value>
+                                <value val="1">Low quality pulse C2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C1</value>
+                                <value val="1">Low quality pulse C1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D4</value>
+                                <value val="1">Low quality pulse D4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D2</value>
+                                <value val="1">Low quality pulse D2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D1</value>
+                                <value val="1">Low quality pulse D1</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Confidence level for each bit of a Mode-2 reply as provided by a monopulse SSR station.
+            </definition>
+        </item>
+        <item name="065" title="Mode-1 Code Confidence Indicator">
+            <variation type="group">
+                <items>
+                    <spare size="3" />
+                    <item name="QA4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A4</value>
+                                <value val="1">Low quality pulse A4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A2</value>
+                                <value val="1">Low quality pulse A2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A1</value>
+                                <value val="1">Low quality pulse A1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B2</value>
+                                <value val="1">Low quality pulse B2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B1</value>
+                                <value val="1">Low quality pulse B1</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Confidence level for each bit of a Mode-1 reply as provided by a monopulse SSR station.
+            </definition>
+        </item>
+        <item name="070" title="Mode-3/A Code in Octal Representation">
+            <variation type="group">
+                <items>
+                    <item name="V" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="L" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Mode-3/A code derived from the reply of the transponder</value>
+                                <value val="1">Mode-3/A code not extracted during the last scan</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                    <item name="MODE3A" title="Mode-3/A Reply in Octal Representation">
+                        <variation type="element" size="12">
+                            <content type="string" variation="octal" />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Mode-3/A code converted into octal representation.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Bit 15 has no meaning in the case of a smoothed Mode-3/A code and
+                       is set to 0 for a calculated track. For Mode S, it is set to one
+                       when an error correction has been attempted.
+                    2. For Mode S, bit 16 is normally set to zero, but can exceptionally
+                       be set to one to indicate a non-validated Mode-3/A code (e.g. alert
+                       condition detected, but new Mode-3/A code not successfully extracted).
+            </remark>
+        </item>
+        <item name="080" title="Mode-3/A Code Confidence Indicator">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="QA4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A4</value>
+                                <value val="1">Low quality pulse A4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A2</value>
+                                <value val="1">Low quality pulse A2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A1</value>
+                                <value val="1">Low quality pulse A1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B4</value>
+                                <value val="1">Low quality pulse B4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B2</value>
+                                <value val="1">Low quality pulse B2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B1</value>
+                                <value val="1">Low quality pulse B1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C4</value>
+                                <value val="1">Low quality pulse C4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C2</value>
+                                <value val="1">Low quality pulse C2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C1</value>
+                                <value val="1">Low quality pulse C1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D4</value>
+                                <value val="1">Low quality pulse D4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D2</value>
+                                <value val="1">Low quality pulse D2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D1</value>
+                                <value val="1">Low quality pulse D1</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Confidence level for each bit of a Mode-3/A reply as provided by a monopulse SSR station.
+            </definition>
+        </item>
+        <item name="090" title="Flight Level in Binary Representation">
+            <variation type="group">
+                <items>
+                    <item name="V" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="FL" title="">
+                        <variation type="element" size="14">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="FL">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Flight Level converted into binary representation.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. When Mode C code / Mode S altitude code is present but not decodable,
+                       the “Undecodable Mode C code / Mode S altitude code” Warning/Error
+                       should be sent in I048/030.
+                    2. When local tracking is applied and the received Mode C code / Mode S
+                       altitude code corresponds to an abnormal value (the variation with
+                       the previous plot is estimated too important by the tracker),
+                       the “Mode C code / Mode S altitude code abnormal value compared
+                       to the track“ Warning/Error should be sent in I048/030.
+                    3. The value shall be within the range described by ICAO Annex 10
+                    4. For Mode S, bit 15 (G) is set to one when an error correction has
+                       been attempted.
+            </remark>
+        </item>
+        <item name="100" title="Mode-C Code and Code Confidence Indicator">
+            <variation type="group">
+                <items>
+                    <item name="V" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="2" />
+                    <item name="MODEC" title="Mode-C reply in Gray notation">
+                        <variation type="element" size="12">
+                            <raw />
+                        </variation>
+                    </item>
+                    <spare size="4" />
+                    <item name="QC1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C1</value>
+                                <value val="1">Low quality pulse C1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A1</value>
+                                <value val="1">Low quality pulse A1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C2</value>
+                                <value val="1">Low quality pulse C2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A2</value>
+                                <value val="1">Low quality pulse A2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QC4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse C4</value>
+                                <value val="1">Low quality pulse C4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QA4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse A4</value>
+                                <value val="1">Low quality pulse A4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B1</value>
+                                <value val="1">Low quality pulse B1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD1" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D1</value>
+                                <value val="1">Low quality pulse D1</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B2</value>
+                                <value val="1">Low quality pulse B2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD2" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D2</value>
+                                <value val="1">Low quality pulse D2</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QB4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse B4</value>
+                                <value val="1">Low quality pulse B4</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="QD4" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">High quality pulse D4</value>
+                                <value val="1">Low quality pulse D4</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Mode-C height in Gray notation as received from the transponder together
+                with the confidence level for each reply bit as provided by a MSSR/Mode S station.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. For Mode S, D1 is also designated as Q, and is used to denote either
+                       25ft or 100ft reporting.
+                    2. For Mode S, bit-31 (G) is set when an error correction has been attempted.
+            </remark>
+        </item>
+        <item name="110" title="Height Measured by a 3D Radar">
+            <variation type="group">
+                <items>
+                    <spare size="2" />
+                    <item name="3DH" title="3D height, in binary notation. Negative values are expressed in two&amp;apos;s complement">
+                        <variation type="element" size="14">
+                            <content type="quantity" signed="true" scaling="25" fractional_bits="0" unit="ft">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Height of a target as measured by a 3D radar. The height shall use mean
+                sea level as the zero reference level.
+            </definition>
+        </item>
+        <item name="120" title="Radial Doppler Speed">
+            <variation type="compound">
+                <item name="CAL" title="Calculated Doppler Speed">
+                    <variation type="group">
+                        <items>
+                            <item name="D" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Doppler speed is valid</value>
+                                        <value val="1">Doppler speed is doubtful</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="5" />
+                            <item name="CAL" title="Calculated Doppler Speed, coded in two&amp;apos;s complement">
+                                <variation type="element" size="10">
+                                    <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="m/sec">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="RDS" title="Raw Doppler Speed">
+                    <variation type="group">
+                        <items>
+                            <item name="REP" title="Repetition Factor">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="DOP" title="Doppler Speed">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="m/sec">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="AMB" title="Ambiguity Range">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="m/sec">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="FRQ" title="Transmitter Frequency">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="Mhz">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                Information on the Doppler Speed of the target report.
+            </definition>
+        </item>
+        <item name="130" title="Radar Plot Characteristics">
+            <variation type="compound">
+                <item name="SRL" title="SSR plot runlength">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="360" fractional_bits="13" unit="dg">
+                        </content>
+                    </variation>
+                    <description>
+                        SSR plot runlength, expressed as a positive binary value.
+                    </description>
+                </item>
+                <item name="SRR" title="Number of Received Replies for (M)SSR">
+                    <variation type="element" size="8">
+                        <content type="integer" signed="false">
+                        </content>
+                    </variation>
+                    <description>
+                        Number of Received Replies for (M)SSR
+                    </description>
+                </item>
+                <item name="SAM" title="Amplitude of (M)SSR Reply">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="dBm">
+                        </content>
+                    </variation>
+                    <description>
+                        Amplitude of (M)SSR Reply
+                    </description>
+                </item>
+                <item name="PRL" title="Primary Plot Runlength">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="360" fractional_bits="13" unit="dg">
+                        </content>
+                    </variation>
+                    <description>
+                        Primary Plot Runlength, expressed as positive binary value
+                    </description>
+                </item>
+                <item name="PAM" title="Amplitude of Primary Plot">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="dBm">
+                        </content>
+                    </variation>
+                    <description>
+                        Amplitude of Primary Plot
+                    </description>
+                </item>
+                <item name="RPD" title="Difference in Range between PSR and SSR plot">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="8" unit="NM">
+                        </content>
+                    </variation>
+                    <description>
+                        Range (PSR-SSR)
+                    </description>
+                </item>
+                <item name="APD" title="Difference in Azimuth between PSR and SSR plot">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="true" scaling="360" fractional_bits="14" unit="dg">
+                        </content>
+                    </variation>
+                    <description>
+                        Azimuth (PSR-SSR)
+                    </description>
+                </item>
+            </variation>
+            <definition>
+                Additional information on the quality of the target report.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The total range covered is therefore from 0 to 11.21 dg.
+                    2. Negative values are coded in two&amp;apos;s complement form.
+                    3. The total range covered is therefore from 0 to 11.21 dg.
+                    4. Negative values are coded in two&amp;apos;s complement form.
+                    5. Negative values are coded in two&amp;apos;s complement form.
+                    6. The covered range difference is +/- 0.5 NM.
+                    7. Sending the maximum value means that the difference in range
+                       is equal or greater than the maximum value.
+                    8. Negative values are coded in two&amp;apos;s complement form.
+                    9. The covered azimuth difference is +/-360/2 7 = +/- 2.8125 dg.
+                    10. Sending the maximum value means that the difference in range
+                        is equal or greater than the maximum value.
+            </remark>
+        </item>
+        <item name="140" title="Time of Day">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                    <constrain type="lt">86400</constrain>
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping expressed as Co-ordinated Universal Time (UTC).
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The time of day value is reset to 0 each day at midnight.
+                    2. Every radar station using ASTERIX should be equipped with at least
+                       one synchronised time source
+            </remark>
+        </item>
+        <item name="161" title="Track Number">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="TRN" title="Track number">
+                        <variation type="element" size="12">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                An integer value representing a unique reference to a track record within
+                a particular track file.
+            </definition>
+        </item>
+        <item name="170" title="Track Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="CNF" title="Confirmed vs. Tentative Track">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Confirmed Track</value>
+                                <value val="1">Tentative Track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="RAD" title="Type of Sensor(s) maintaining Track">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Combined Track</value>
+                                <value val="1">PSR Track</value>
+                                <value val="2">SSR/Mode S Track</value>
+                                <value val="3">Invalid</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="DOU" title="Signals level of confidence in plot to track association process">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Normal confidence</value>
+                                <value val="1">Low confidence in plot to track association.</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MAH" title="Manoeuvre detection in Horizontal Sense">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No horizontal man.sensed</value>
+                                <value val="1">Horizontal man. sensed</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CDM" title="Climbing / Descending Mode">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Maintaining</value>
+                                <value val="1">Climbing</value>
+                                <value val="2">Descending</value>
+                                <value val="3">Unknown</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TRE" title="Signal for End_of_Track">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Track still alive</value>
+                                <value val="1">End of track lifetime(last report for this track)</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="GHO" title="Ghost vs. true target">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">True target track.</value>
+                                <value val="1">Ghost target track.</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SUP" title="Track maintained with track information from neighbouring Node B on the cluster, or network">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">no</value>
+                                <value val="1">yes</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TCC" title="Type of plot coordinate transformation mechanism:">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Tracking performed in so-called &amp;apos;Radar Plane&amp;apos;, i.e. neither slant range correction nor stereographical projection was applied.</value>
+                                <value val="1">Slant range correction and a suitable projection technique                            are used to track in a 2D.reference plane, tangential to the earth model at the Radar Site co-ordinates.</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="3" />
+                </items>
+            </variation>
+            <definition>
+                Status of monoradar track (PSR and/or SSR updated).
+            </definition>
+        </item>
+        <item name="200" title="Calculated Track Velocity in Polar Co-ordinates">
+            <variation type="group">
+                <items>
+                    <item name="GSP" title="Calculated Groundspeed">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="14" unit="NM/s">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="HDG" title="Calculated Heading">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated track velocity expressed in polar co-ordinates.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The calculated heading is related to the geographical North at the
+                      aircraft position.
+            </remark>
+        </item>
+        <item name="210" title="Track Quality">
+            <variation type="group">
+                <items>
+                    <item name="SIGX" title="Sigma (X)) Standard Deviation on the horizontal axis of the local grid system">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="NM">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SIGY" title="Sigma (Y)) Standard Deviation on the vertical axis of the local grid system">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="NM">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SIGV" title="Sigma (V)) Standard Deviation on the groundspeed within the local grid system">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="14" unit="NM/s">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SIGH" title="Sigma (H)) Standard Deviation on the heading within the local grid system">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="12" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Track quality in the form of a vector of standard deviations.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The standard deviation is per definition a positive value, hence
+                       the range covered is : 0&amp;lt;= Sigma(X)&amp;lt;2 NM
+                    2. The standard deviation is per definition a positive value, hence
+                       the range covered is : 0&amp;lt;= Sigma(Y)&amp;lt;2 NM
+                    3. The standard deviation is per definition a positive value, hence
+                       the range covered is: 0&amp;lt;=Sigma (V)&amp;lt;56.25 Kt
+                    4. The standard deviation is per definition a positive value; hence
+                       the range covered is: 0 &amp;lt;= sigma (H) &amp;lt; 22.5 degrees.
+            </remark>
+        </item>
+        <item name="220" title="Aircraft Address">
+            <variation type="element" size="24">
+                <raw />
+            </variation>
+            <definition>
+                Aircraft address (24-bits Mode S address) assigned uniquely to each aircraft.
+            </definition>
+        </item>
+        <item name="230" title="Communications/ACAS Capability and Flight Status">
+            <variation type="group">
+                <items>
+                    <item name="COM" title="Communications capability of the transponder">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No communications capability (surveillance only)</value>
+                                <value val="1">Comm. A and Comm. B capability</value>
+                                <value val="2">Comm. A, Comm. B and Uplink ELM</value>
+                                <value val="3">Comm. A, Comm. B, Uplink ELM and Downlink ELM</value>
+                                <value val="4">Level 5 Transponder capability</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="STAT" title="Flight Status">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No alert, no SPI, aircraft airborne</value>
+                                <value val="1">No alert, no SPI, aircraft on ground</value>
+                                <value val="2">Alert, no SPI, aircraft airborne</value>
+                                <value val="3">Alert, no SPI, aircraft on ground</value>
+                                <value val="4">Alert, SPI, aircraft airborne or on ground</value>
+                                <value val="5">No alert, SPI, aircraft airborne or on ground</value>
+                                <value val="7">Unknown</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SI" title="SI/II Transponder Capability">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">SI-Code Capable</value>
+                                <value val="1">II-Code Capable</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                    <item name="MSSC" title="Mode-S Specific Service Capability">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No</value>
+                                <value val="1">Yes</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ARC" title="Altitude reporting capability">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">100 ft resolution</value>
+                                <value val="1">25 ft resolution</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AIC" title="Aircraft identification capability">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No</value>
+                                <value val="1">Yes</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="B1A" title="BDS 1,0 bit 16">
+                        <variation type="element" size="1">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="B1B" title="BDS 1,0 bits 37/40">
+                        <variation type="element" size="4">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Communications capability of the transponder, capability of the on-board
+                ACAS equipment and flight status.
+            </definition>
+        </item>
+        <item name="240" title="Aircraft Identification">
+            <variation type="element" size="48">
+                <content type="string" variation="icao" />
+            </variation>
+            <definition>
+                Aircraft identification (in 8 characters) obtained from an aircraft
+                equipped with a Mode S transponder.
+            </definition>
+            <remark>
+                Notes:
+
+                    - This data item contains the flight identification as available in
+                      the respective Mode S transponder registers.
+            </remark>
+        </item>
+        <item name="250" title="Mode S MB Data">
+            <variation type="group">
+                <items>
+                    <item name="REP" title="Repetition factor">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="MBDATA" title="Mode S Comm B message data">
+                        <variation type="element" size="56">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="BDS1" title="Comm B Data Buffer Store 1 Address">
+                        <variation type="element" size="4">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="BDS2" title="Comm B Data Buffer Store 2 Address">
+                        <variation type="element" size="4">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Mode S Comm B data as extracted from the aircraft transponder.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. For the transmission of BDS20, item 240 is used.
+                    2. For the transmission of BDS30, item 260 is used.
+                    3. In case of data extracted via Comm-B broadcast, all bits of fields
+                       BDS1 and BDS2 are set to 0; in case of data extracted via GICB
+                       requests, the fields BDS1 and BDS2 correspond to the GICB register number.
+            </remark>
+        </item>
+        <item name="260" title="ACAS Resolution Advisory Report">
+            <variation type="element" size="56">
+                <raw />
+            </variation>
+            <definition>
+                Currently active Resolution Advisory (RA), if any, generated by the ACAS
+                associated with the transponder transmitting the report and threat identity data.
+            </definition>
+            <remark>
+                Notes:
+
+                    - Refer to ICAO Draft SARPs for ACAS for detailed explanations.
+            </remark>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>140</item>
+        <item>020</item>
+        <item>040</item>
+        <item>070</item>
+        <item>090</item>
+        <item>130</item>
+        <item>220</item>
+        <item>240</item>
+        <item>250</item>
+        <item>161</item>
+        <item>042</item>
+        <item>200</item>
+        <item>170</item>
+        <item>210</item>
+        <item>030</item>
+        <item>080</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+        <item>230</item>
+        <item>260</item>
+        <item>055</item>
+        <item>050</item>
+        <item>065</item>
+        <item>060</item>
+        <item>SP</item>
+        <item>RE</item>
+    </uap>
+</category>

@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ref cat="21" edition="1.4">
+    <title>ADS-B Target Reports Expansion</title>
+    <date>2018-03-08</date>
+    <variation type="compound" fspec_size="8">
+        <item name="BPS" title="Barometric Pressure Setting">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="BPS" title="Barometric Pressure Setting">
+                        <variation type="element" size="12">
+                            <content type="quantity" signed="false" scaling="0.1" fractional_bits="0" unit="hPa">
+                                <constrain type="ge">0</constrain>
+                                <constrain type="le">409.5</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Barometric Pressure Setting
+            </definition>
+            <remark>
+                Notes:
+
+                    - BPS is the barometric pressure setting of the aircraft minus 800 hPa
+
+                    - A value of &amp;quot;0&amp;quot; indicates that in the aircraft a value of 800 hPa or
+                      less has been selected.
+
+                    - A value of &amp;quot;409.5&amp;quot; indicates that in the aircraft a value of 1209.5
+                      hPa or more has been selected.
+            </remark>
+        </item>
+        <item name="SH" title="Selected Heading">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="HDR" title="Horizontal Reference Direction">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">True North</value>
+                                <value val="1">Magnetic North</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="STAT" title="Selected Heading Status">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Data is either unavailable or invalid.</value>
+                                <value val="1">Data is available and valid.</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SH" title="Selected Heading">
+                        <variation type="element" size="10">
+                            <content type="quantity" signed="false" scaling="45" fractional_bits="6" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Selected Heading
+            </definition>
+            <remark>
+                On many aircraft, the ADS-B Transmitting Subsystem receives
+                Selected Heading from a Mode Control Panel / Flight Control Unit
+                (MCP / FCU). Users of this data are cautioned that the Selected
+                Heading value transmitted by the ADS-B Transmitting Subsystem
+                does not necessarily reflect the true intention of the airplane during
+                certain flight modes (e.g., during LNAV mode).
+            </remark>
+        </item>
+        <item name="NAV" title="Navigation Mode">
+            <variation type="group">
+                <items>
+                    <item name="AP" title="Autopilot">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Autopilot not engaged</value>
+                                <value val="1">Autopilot engaged</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="VN" title="Vertical Navigation">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Vertical Navigation not active</value>
+                                <value val="1">Vertical Navigation active</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AH" title="Altitude Hold">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Altitude Hold not engaged</value>
+                                <value val="1">Altitude Hold engaged</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AM" title="Approach Mode">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Approach Mode not active</value>
+                                <value val="1">Approach Mode active</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="4" />
+                </items>
+            </variation>
+            <definition>
+                Navigation Mode Settings
+            </definition>
+            <remark>
+                This data-item should only be transmitted if an ADS-B indication has
+                been received that the mode bits have been &amp;quot;actively populated&amp;quot;.by
+                the avionics (1090 ES version 2 (as defined in I021/210) BDS 6,2,
+                subtype 1, bit 47: &amp;quot;Status of MCP / FCU Mode Bits&amp;quot;)
+            </remark>
+        </item>
+        <item name="GAO" title="GPS Antenna Offset">
+            <variation type="element" size="8">
+                <raw />
+            </variation>
+            <definition>
+                GPS Antenna Offset
+            </definition>
+            <remark>
+                The value of this field is copied from the respective bits 33-40 of
+                version 2 (as defined in I021/210) of 1090 ES BDS register 6,5
+                (Aircraft Operational Status)
+            </remark>
+        </item>
+        <item name="SGV" title="Surface Ground Vector">
+            <variation type="extended" primary_size="16" extension_size="8">
+                <items>
+                    <item name="STP" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Aircraft has not stopped</value>
+                                <value val="1">Aircraft has stopped</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="HTS" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Heading/Ground Track data is not valid</value>
+                                <value val="1">Heading/Ground Track data is valid</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="HTT" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Heading data provided</value>
+                                <value val="1">Ground Track provided</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="HRD" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">True North</value>
+                                <value val="1">Magnetic North</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="GSS" title="Ground speed">
+                        <variation type="element" size="11">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="3" unit="kts">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="HGT" title="Heading/Ground Track information">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="false" scaling="45" fractional_bits="4" unit="deg">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Ground Speed and Track Angle elements of the Surface
+                Ground Vector.
+            </definition>
+        </item>
+        <item name="STA" title="Aircraft Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="ES" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Target is not 1090 ES IN capable</value>
+                                <value val="1">Target is 1090 ES IN capable</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="UAT" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Target is not UAT IN capable</value>
+                                <value val="1">Target is UAT IN capable</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="5" />
+                </items>
+            </variation>
+            <definition>
+                This item contains flags to convey information on the status
+                of a target.
+            </definition>
+        </item>
+        <item name="TNH" title="True North Heading">
+            <variation type="element" size="16">
+                <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                </content>
+            </variation>
+            <definition>
+                True North Heading (Element of Air Vector).
+            </definition>
+            <remark>
+                Magnetic Heading is defined in I021/152.
+            </remark>
+        </item>
+        <item name="MES" title="Military Extended Squitter">
+            <variation type="compound">
+                <item name="SUM" title="Mode 5 Summary">
+                    <variation type="group">
+                        <items>
+                            <item name="M5" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No Mode 5 interrogation</value>
+                                        <value val="1">Mode 5 interrogation</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="ID" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No authenticated Mode 5 ID reply/report</value>
+                                        <value val="1">Authenticated Mode 5 ID reply/report</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="DA" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No authenticated Mode 5 Data reply or Report</value>
+                                        <value val="1">Authenticated Mode 5 Data reply or Report (i.e any valid Mode 5 reply type other than ID)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M1" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 1 code not present or not from Mode 5 reply/report</value>
+                                        <value val="1">Mode 1 code from Mode 5 reply/report.</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M2" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 2 code not present or not from Mode 5 reply/report</value>
+                                        <value val="1">Mode 2 code from Mode 5 reply/report.</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M3" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 3 code not present or not from Mode 5 reply/report</value>
+                                        <value val="1">Mode 3 code from Mode 5 reply/report.</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MC" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Flightlevel not present or not from Mode 5 reply/report</value>
+                                        <value val="1">Flightlevel from Mode 5 reply/report</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="PO" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Position not from Mode 5 report (ADS-B report)</value>
+                                        <value val="1">Position from Mode 5 report</value>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                    <remark>
+                        Notes:
+
+                            1. The flag M2 refers to the contents of Subfield #6 below, M3, MC refer
+                               to the contents of data items I021/070 and I021/145 respectively. The
+                               flag M1 refers to the contents of Subfield #3 below (Extended Mode 1
+                               Code in Octal Representation).
+
+                            2. If a Mode 5 reply/report is received with the Emergency bit set, then
+                               the Military Emergency bit (ME) in Data Item I021/200, Target Status,
+                               shall be set.
+
+                            3. If a Mode 5 reply/report is received with the Identification of Position bit
+                               set, then the Special Position Identification bit (SPI) in Data Item
+                               I021/200, Target Status, shall be set.
+
+                            4. If a Mode 5 report (ID or Data) is received and fullfill the autentication
+                               criteria the corresponding authentication bit shall be set.
+                    </remark>
+                </item>
+                <item name="PNO" title="Mode 5 PIN /National Origin">
+                    <variation type="group">
+                        <items>
+                            <spare size="2" />
+                            <item name="PIN" title="PIN Code">
+                                <variation type="element" size="14">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <spare size="5" />
+                            <item name="NO" title="National Origin Code">
+                                <variation type="element" size="11">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="EM1" title="Extended Mode 1 Code in Octal Representation">
+                    <variation type="group">
+                        <items>
+                            <item name="V" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Code validated</value>
+                                        <value val="1">Code not validated</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                            <item name="L" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 1 code as derived from the report of the transponder</value>
+                                        <value val="1">Smoothed Mode 1 code as provided by a local tracker</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                            <item name="EM1" title="Extended Mode 1 Code in Octal Representation">
+                                <variation type="element" size="12">
+                                    <content type="string" variation="octal" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                    <remark>
+                        Notes:
+
+                            - Subfield #1 is present, the M1 bit in Subfield #1 indicates whether the
+                              Extended Mode 1 Code is from a Mode 5 reply or a Mode 1 reply. If
+                              Subfield #1 is not present, the Extended Mode 1 Code is from a Mode
+                              1 reply.
+
+                            - If Subfield #3 is not present the Mode 1 Code was not reported or all
+                              Code Bits were equal to 0.
+
+                            - The valid bit is set if the Code was only reported once for that target.
+                    </remark>
+                </item>
+                <item name="XP" title="X Pulse Presence">
+                    <variation type="group">
+                        <items>
+                            <spare size="2" />
+                            <item name="XP" title="X-pulse from Mode 5 PIN reply/report">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-Pulse not present.</value>
+                                        <value val="1">X-pulse present.</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X5" title="X-pulse from Mode 5 Data reply or Report.">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no authenticated Data reply or Report received.</value>
+                                        <value val="1">X-pulse set to one (present).</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="XC" title="X-pulse from Mode C reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode C reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X3" title="X-pulse from Mode 3/A reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode 3/A reply&amp;quot;</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X2" title="X-pulse from Mode 2 reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">0 X-pulse set to zero or no Mode 2 reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X1" title="X-pulse from Mode 1 reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode 1 reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                    <remark>
+                        Within Mode 5 reports, the X-Pulse can be set for the following cases:
+
+                        1. In a combined Mode 1 and Mode 2 report: in this case the X5 bit and the X2 bit
+                        shall be set;
+
+                        2. In a combined Mode 3 and Mode C report: in this case the X5 bit and the X3
+                        bit shall be set;
+
+                        3. In a Mode 5 PIN data report: in this case the X5 bit and the XP bit shall be set.
+                        The X1 bit and the XC bit are meaningless as in Mode 1 and Mode C
+                        replies/reports the X Pulse is not defined. They are kept for compatibility
+                        reasons.
+                    </remark>
+                </item>
+                <item name="FOM" title="Figure of Merit">
+                    <variation type="group">
+                        <items>
+                            <spare size="3" />
+                            <item name="FOM" title="Figure of Merit">
+                                <variation type="element" size="5">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="M2" title="Mode 2 Code in Octal Representation">
+                    <variation type="group">
+                        <items>
+                            <item name="V" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Code validated</value>
+                                        <value val="1">Code not validated</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                            <item name="L" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode-2 code as derived from the reply of the transponder</value>
+                                        <value val="1">Smoothed Mode-2 code as provided by a local tracker</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                            <item name="MODE2" title="Mode 2 Code in Octal Representation">
+                                <variation type="element" size="12">
+                                    <content type="string" variation="octal" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                    <remark>
+                        If Subfield 6 is not present the Mode 2 Code was no reported or all
+                        Code Bits were equal to 0.
+                    </remark>
+                </item>
+            </variation>
+            <definition>
+                Contents of Extended Squitters transmitted by Military Aircraft
+            </definition>
+            <remark>
+                Notes:
+
+                    - The Reserved Expansion Field is optional. When used to transmit MES, it shall
+                      be sent when the targets are represented by Mode 5 Level 2 reports.
+
+                    - The information contained in this data item is specific to
+                      1090MHz Extended Squitter messages transmitted by military
+                      aircraft (Mode 5 Level 2 squitter).
+            </remark>
+        </item>
+    </variation>
+</ref>

@@ -1,0 +1,2940 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="62" edition="1.17">
+    <title>SDPS Track Messages</title>
+    <date>2014-12-01</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the system sending the data.
+            </definition>
+            <remark>
+                Note:
+                    - The up-to-date list of SACs is published on the
+                      EUROCONTROL Web Site (http://www.eurocontrol.int/asterix).
+            </remark>
+        </item>
+        <item name="015" title="Service Identification">
+            <variation type="element" size="8">
+                <raw />
+            </variation>
+            <definition>
+                Identification of the service provided to one or more users.
+            </definition>
+        </item>
+        <item name="040" title="Track Number">
+            <variation type="element" size="16">
+                <raw />
+            </variation>
+            <definition>
+                Identification of a track.
+            </definition>
+        </item>
+        <item name="060" title="Track Mode 3/A Code">
+            <variation type="group">
+                <items>
+                    <item name="V" title="Validated">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Code validated</value>
+                                <value val="1">Code not validated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="G" title="Garbled">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Garbled code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CH" title="Change in Mode 3/A">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No change</value>
+                                <value val="1">Mode 3/A has changed</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                    <item name="MODE3A" title="Mode-3/A Reply in Octal Representation">
+                        <variation type="element" size="12">
+                            <content type="string" variation="octal" />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Mode-3/A code converted into octal representation.
+            </definition>
+        </item>
+        <item name="070" title="Time Of Track Information">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping of the information provided
+                in the track message, in the form of elapsed time since
+                last mid night, expressed as UTC.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. This is the time of the track state vector.
+                    2. The time is reset to zero at every midnight.
+            </remark>
+        </item>
+        <item name="080" title="Track Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="MON" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Multisensor track</value>
+                                <value val="1">Monosensor track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SPI" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">SPI present in the last report received from a sensor capable of decoding this data</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MRH" title="Most Reliable Height">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Barometric altitude (Mode C) more reliable</value>
+                                <value val="1">Geometric altitude more reliable</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SRC" title="Source of Calculated Track Altitude for I062/130">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No source</value>
+                                <value val="1">GNSS</value>
+                                <value val="2">3D radar</value>
+                                <value val="3">Triangulation</value>
+                                <value val="4">Height from coverage</value>
+                                <value val="5">Speed look-up table</value>
+                                <value val="6">Default height</value>
+                                <value val="7">Multilateration</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CNF" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Confirmed track</value>
+                                <value val="1">Tentative track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SIM" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Actual track</value>
+                                <value val="1">Simulated track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TSE" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Last message transmitted to the user for the track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TSB" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">First message transmitted to the user for the track</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="FPC" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Not flight-plan correlated</value>
+                                <value val="1">Flight plan correlated</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AFF" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">ADS-B data inconsistent with other surveillance information</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="STP" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Slave Track Promotion</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="KOS" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Complementary service used</value>
+                                <value val="1">Background service used</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AMA" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Track not resulting from amalgamation process</value>
+                                <value val="1">Track resulting from amalgamation process</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MD4" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">No Mode 4 interrogation</value>
+                                <value val="1">Friendly target</value>
+                                <value val="2">Unknown target</value>
+                                <value val="3">No reply</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ME" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Military Emergency present in the last report received from a sensor capable of decoding this data</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MI" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Military Identification present in the last report received from a sensor capable of decoding this data</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MD5" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">No Mode 5 interrogation</value>
+                                <value val="1">Friendly target</value>
+                                <value val="2">Unknown target</value>
+                                <value val="3">No reply</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CST" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Age of the last received track update is higher than system dependent threshold (coasting)</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="PSR" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Age of the last received PSR track update is higher than system dependent threshold</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SSR" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Age of the last received SSR track update is higher than system dependent threshold</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MDS" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Age of the last received Mode S track update is higher than system dependent threshold</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ADS" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Age of the last received ADS-B track update is higher than system dependent threshold</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SUC" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Special Used Code (Mode A codes to be defined in the system to mark a track with special interest)</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AAC" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Assigned Mode A Code Conflict (same discrete Mode A Code assigned to another track)</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SDS" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Combined</value>
+                                <value val="1">Co-operative only</value>
+                                <value val="2">Non-Cooperative only</value>
+                                <value val="3">Not defined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="EMS" title="">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No emergency</value>
+                                <value val="1">General emergency</value>
+                                <value val="2">Lifeguard / medical</value>
+                                <value val="3">Minimum fuel</value>
+                                <value val="4">No communications</value>
+                                <value val="5">Unlawful interference</value>
+                                <value val="6">Downed Aircraft</value>
+                                <value val="7">Undefined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="PFT" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No indication</value>
+                                <value val="1">Potential False Track Indication</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="FPLT" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Track created / updated with FPL data</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="DUPT" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Duplicate Mode 3/A Code</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="DUPF" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Duplicate Flight Plan</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="DUPM" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default value</value>
+                                <value val="1">Duplicate Flight Plan due to manual correlation</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="4" />
+                </items>
+            </variation>
+            <definition>
+                Status of a track.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Track type and coasting can also be derived from I062/290 System Track Update Ages
+                    2. If the system supports the technology, default value (0) means that the technology was used to produce the report
+                    3. If the system does not support the technology, default value is meaningless.
+                    4. Bits (EMS): other than subfield #11 of data item I062/380, these
+                       bits allow the SDPS to set the emergency indication as derived from
+                       other sources than ADS-B (e.g. based on the Mode 3/A code).
+                    5. Bit (PFT): with this flag an SDPS can indicate that internal
+                       processing points to the track being potentially false. Details on the
+                       internal processing are system dependent.
+                    6. Bit (FPLT): this bit - if set - indicates that the information contained
+                       in the target report has been updated by flight plan related data
+                       because no surveillance data was available for the target, or was
+                       created based on flight plan related data in areas with no
+                       surveillance.
+                    7. Bit (DUPT) is set to 1 if the correlation between the target report and a flight
+                       plan is not possible because the Mode 3/A code stated in the flight plan exists
+                       more than once in the surveillance data.
+                    8. Bit (DUPF) - if set to 1 - indicates that for a specific surveillance target more
+                       than one flight plan exists which makes correlation impossible.
+                    9. Bit (DUPM) is set to 1 if a target was correlated manually but also a regular
+                       flight plan exists.
+                    10. All tracks for which bits DUPT, DUPF or DUPM are set to 1 are marked on the CWP.
+            </remark>
+        </item>
+        <item name="100" title="Calculated Track Position">
+            <variation type="group">
+                <items>
+                    <item name="X" title="X Coordinate">
+                        <variation type="element" size="24">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="1" unit="m">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="Y" title="Y Coordinate">
+                        <variation type="element" size="24">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="1" unit="m">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated position in Cartesian co-ordinates with a resolution of
+                0.5m, in two&amp;apos;s complement form.
+            </definition>
+        </item>
+        <item name="105" title="Calculated Position In WGS-84 Co-ordinates">
+            <variation type="group">
+                <items>
+                    <item name="LAT" title="Latitude">
+                        <variation type="element" size="32">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="25" unit="deg">
+                                <constrain type="ge">-90</constrain>
+                                <constrain type="le">90</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="LON" title="Longitude">
+                        <variation type="element" size="32">
+                            <content type="quantity" signed="true" scaling="180" fractional_bits="25" unit="deg">
+                                <constrain type="ge">-180</constrain>
+                                <constrain type="lt">180</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated Position in WGS-84 Co-ordinates with a resolution of
+                :math:`180/2^{25}` degrees.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The LSB provides a resolution at least better than 0.6m.
+            </remark>
+        </item>
+        <item name="110" title="Mode 5 Data Reports and Extended Mode 1 Code">
+            <variation type="compound">
+                <item name="SUM" title="Mode 5 Summary">
+                    <variation type="group">
+                        <items>
+                            <item name="M5" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No Mode 5 interrogation</value>
+                                        <value val="1">Mode 5 interrogation</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="ID" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No authenticated Mode 5 ID reply</value>
+                                        <value val="1">Authenticated Mode 5 ID reply</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="DA" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No authenticated Mode 5 Data reply or Report</value>
+                                        <value val="1">Authenticated Mode 5 Data reply or Report (i.e any valid Mode 5 reply type other than ID)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M1" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 1 code not present or not from Mode 5 reply</value>
+                                        <value val="1">Mode 1 code from Mode 5 reply</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M2" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 2 code not present or not from Mode 5 reply</value>
+                                        <value val="1">Mode 2 code from Mode 5 reply</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="M3" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 3 code not present or not from Mode 5 reply</value>
+                                        <value val="1">Mode 3 code from Mode 5 reply</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MC" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode C altitude code not present or not from Mode 5 reply</value>
+                                        <value val="1">Mode C altitude from Mode 5 reply</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X" title="X-pulse from Mode 5 Data Reply or Report">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no authenticated Data reply or Report received</value>
+                                        <value val="1">X-pulse set to one</value>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="PMN" title="Mode 5 PIN/ National Origin/Mission Code">
+                    <variation type="group">
+                        <items>
+                            <spare size="2" />
+                            <item name="PIN" title="PIN Code">
+                                <variation type="element" size="14">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <spare size="3" />
+                            <item name="NAT" title="National Origin">
+                                <variation type="element" size="5">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <spare size="2" />
+                            <item name="MIS" title="Mission Code">
+                                <variation type="element" size="6">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="POS" title="Mode 5 Reported Position">
+                    <variation type="group">
+                        <items>
+                            <item name="LAT" title="Latitude">
+                                <variation type="element" size="24">
+                                    <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                        <constrain type="ge">-90</constrain>
+                                        <constrain type="le">90</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="LON" title="Longitude">
+                                <variation type="element" size="24">
+                                    <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                        <constrain type="ge">-180</constrain>
+                                        <constrain type="lt">180</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="GA" title="Mode 5 GNSS-derived Altitude">
+                    <variation type="group">
+                        <items>
+                            <spare size="1" />
+                            <item name="RES" title="Resolution with which the GNSS-derived Altitude (GA) is Reported">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">GA reported in 100 ft increments</value>
+                                        <value val="1">GA reported in 25 ft increments</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="GA" title="GNSS-derived Altitude of Target, Expressed as Height Above WGS 84 Ellipsoid">
+                                <variation type="element" size="14">
+                                    <content type="quantity" signed="true" scaling="25" fractional_bits="0" unit="ft">
+                                        <constrain type="ge">-1000</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="EM1" title="Extended Mode 1 Code in Octal Representation">
+                    <variation type="group">
+                        <items>
+                            <spare size="4" />
+                            <item name="EM1" title="Extended Mode 1 Reply in Octal Representation">
+                                <variation type="element" size="12">
+                                    <content type="string" variation="octal" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="TOS" title="Time Offset for POS and GA">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="7" unit="s">
+                        </content>
+                    </variation>
+                    <description>
+                        Time Offset coded as a twos complement number with an LSB of 1/128 s.
+                        The time at which the Mode 5 Reported Position (Subfield #3)
+                        and Mode 5 GNSS-derived Altitude (Subfield #4) are valid is given
+                        by Time of Day (I048/140) plus Time Offset.
+                    </description>
+                </item>
+                <item name="XP" title="X Pulse Presence">
+                    <variation type="group">
+                        <items>
+                            <spare size="3" />
+                            <item name="X5" title="X-pulse from Mode 5 Data Reply or Report">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no authenticated Data reply or Report received</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="XC" title="X-pulse from Mode C Reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode C reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X3" title="X-pulse from Mode 3/A Reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode 3/A reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X2" title="X-pulse from Mode 2 Reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode 2 reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="X1" title="X-pulse from Mode 1 Reply">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">X-pulse set to zero or no Mode 1 reply</value>
+                                        <value val="1">X-pulse set to one (present)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                Mode 5 Data reports and Extended Mode 1 Code.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The flags M2, M3, MC refer to the contents of data subitems I062/120,
+                       I062/060 and I062/135 respectively. The flag M1 refers to the contents
+                       of the Subfield #5 (Extended Mode 1 Code in Octal Representation).
+                    2. If an authenticated Mode 5 reply is received with the Emergency
+                       bit set, then the Military Emergency bit (ME) in Data Item I062/080,
+                       Track Status, shall be set.
+                    3. If an authenticated Mode 5 reply is received with the Identification
+                       of Position bit set, then the Special Position Identification
+                       bit (SPI) in Data Item I062/080, Track Status, shall be set.
+                    4. The resolution implied by the LSB is better than the resolution
+                       with which Mode 5 position reports are transmitted from aircraft
+                       transponders using currently defined formats.
+                    5. GA is coded as a 14-bit two&amp;apos;s complement binary number with
+                       an LSB of 25 ft. irrespective of the setting of RES.
+                    6. The minimum value of GA that can be reported is -1000 ft.
+                    7. If Subfield #1 is present, the M1 bit in Subfield #1 indicates
+                       whether the Extended Mode 1 Code is from a Mode 5 reply or
+                       a Mode 1 reply. If Subfield #1 is not present, the Extended
+                       Mode 1 Code is from a Mode 1 reply.
+                    8. TOS shall be assumed to be zero if Subfield #6 is not present.
+            </remark>
+        </item>
+        <item name="120" title="Track Mode 2 Code">
+            <variation type="group">
+                <items>
+                    <spare size="4" />
+                    <item name="MODE2" title="Mode-2 Code in Octal Representation">
+                        <variation type="element" size="12">
+                            <content type="string" variation="octal" />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Mode 2 code associated to the track
+            </definition>
+        </item>
+        <item name="130" title="Calculated Track Geometric Altitude">
+            <variation type="element" size="16">
+                <content type="quantity" signed="false" scaling="6.25" fractional_bits="0" unit="ft">
+                    <constrain type="ge">-1500</constrain>
+                    <constrain type="le">150000</constrain>
+                </content>
+            </variation>
+            <definition>
+                Vertical distance between the target and the projection of its position
+                on the earth&amp;apos;s ellipsoid, as defined by WGS84, in two&amp;apos;s complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. LSB is required to be less than 10 ft by ICAO
+                    2. The source of altitude is identified in bits (SRC) of item
+                       I062/080 Track Status.
+            </remark>
+        </item>
+        <item name="135" title="Calculated Track Barometric Altitude">
+            <variation type="group">
+                <items>
+                    <item name="QNH" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No QNH correction applied</value>
+                                <value val="1">QNH correction applied</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CTB" title="Calculated Track Barometric Altitude">
+                        <variation type="element" size="15">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="FL">
+                                <constrain type="ge">-15</constrain>
+                                <constrain type="le">1500</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated barometric altitude of the track, in two&amp;apos;s complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    1) ICAO specifies a range between -10 FL and 1267 FL for Mode C
+            </remark>
+        </item>
+        <item name="136" title="Measured Flight Level">
+            <variation type="element" size="16">
+                <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="FL">
+                    <constrain type="ge">-15</constrain>
+                    <constrain type="le">1500</constrain>
+                </content>
+            </variation>
+            <definition>
+                Last valid and credible flight level used to update the track, in two&amp;apos;s
+                complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The criteria to determine the credibility of the flight level
+                       are Tracker dependent.
+                    2. Credible means: within reasonable range of change with respect
+                       to the previous detection.
+                    3. ICAO specifies a range between -10 FL and 1267 FL for Mode C.
+                    4. This item includes the barometric altitude received from ADS-B.
+            </remark>
+        </item>
+        <item name="185" title="Calculated Track Velocity (Cartesian)">
+            <variation type="group">
+                <items>
+                    <item name="VX" title="Velocity (X-component)">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="m/s">
+                                <constrain type="ge">-8192</constrain>
+                                <constrain type="le">8191.75</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="VY" title="Velocity (Y-component)">
+                        <variation type="element" size="16">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="m/s">
+                                <constrain type="ge">-8192</constrain>
+                                <constrain type="le">8191.75</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated track velocity expressed in Cartesian co-ordinates,in
+                two&amp;apos;s complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The y-axis points to the Geographical North at the location of
+                      the target.
+            </remark>
+        </item>
+        <item name="200" title="Mode of Movement">
+            <variation type="group">
+                <items>
+                    <item name="TRANS" title="Transversal Acceleration">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Constant course</value>
+                                <value val="1">Right turn</value>
+                                <value val="2">Left turn</value>
+                                <value val="3">Undetermined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="LONG" title="Longitudinal Acceleration">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Constant groundspeed</value>
+                                <value val="1">Increasing groundspeed</value>
+                                <value val="2">Decreasing groundspeed</value>
+                                <value val="3">Undetermined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="VERT" title="Transversal Acceleration">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Level</value>
+                                <value val="1">Climb</value>
+                                <value val="2">Descent</value>
+                                <value val="3">Undetermined</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ADF" title="Altitude Discrepancy Flag">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">No altitude discrepancy</value>
+                                <value val="1">Altitude discrepancy</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="1" />
+                </items>
+            </variation>
+            <definition>
+                Calculated Mode of Movement of a target.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The ADF, if set, indicates that a difference has been detected
+                      in the altitude information derived from radar as compared to
+                      other technologies (such as ADS-B).
+            </remark>
+        </item>
+        <item name="210" title="Calculated Acceleration (Cartesian)">
+            <variation type="group">
+                <items>
+                    <item name="AX" title="">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="m/s2">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="AY" title="">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="m/s2">
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Calculated Acceleration of the target expressed in Cartesian co-ordinates,
+                in two&amp;apos;s complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The y-axis points to the Geographical North at the location of the target.
+                    2. Maximum value means maximum value or above.
+            </remark>
+        </item>
+        <item name="220" title="Calculated Rate of Climb/Descent">
+            <variation type="element" size="16">
+                <content type="quantity" signed="true" scaling="6.25" fractional_bits="0" unit="ft/min">
+                </content>
+            </variation>
+            <definition>
+                Calculated rate of climb/descent of an aircraft in two&amp;apos;s complement form.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. A positive value indicates a climb, whereas a negative value
+                       indicates a descent.
+            </remark>
+        </item>
+        <item name="245" title="Target Identification">
+            <variation type="group">
+                <items>
+                    <item name="STI" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Callsign or registration downlinked from target</value>
+                                <value val="1">Callsign not downlinked from target</value>
+                                <value val="2">Registration not downlinked from target</value>
+                                <value val="3">Invalid</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="6" />
+                    <item name="CHR" title="Characters 1-8 (Coded on 6 Bits Each) Defining Target Identification">
+                        <variation type="element" size="48">
+                            <content type="string" variation="icao" />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Target (aircraft or vehicle) identification in 8 characters.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. For coding, see section 3.1.2.9 of [Ref.3]
+                    2. As the Callsign of the target can already be transmitted
+                       (thanks to I062/380 Subfield #2 if downlinked from the
+                       aircraft or thanks to I062/390 Subfield #2 if the target
+                       is correlated to a flight plan), and in order to avoid
+                       confusion at end user&amp;apos;s side, this item SHALL not be used.
+            </remark>
+        </item>
+        <item name="270" title="Target Size and Orientation">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="LENGTH" title="Length">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="m">
+                            </content>
+                        </variation>
+                        <description>
+                            Length
+                        </description>
+                    </item>
+                    <item name="ORIENTATION" title="Orientation">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="false" scaling="360" fractional_bits="7" unit="deg">
+                            </content>
+                        </variation>
+                        <description>
+                            Length
+                        </description>
+                    </item>
+                    <item name="WIDTH" title="Width">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="m">
+                            </content>
+                        </variation>
+                        <description>
+                            Length
+                        </description>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Target size defined as length and width of the detected target, and orientation.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The orientation gives the direction which the target nose is
+                       pointing to,relative to the Geographical North.
+                    2. When the length only is sent, the largest dimension is provided.
+            </remark>
+        </item>
+        <item name="290" title="System Track Update Ages">
+            <variation type="compound">
+                <item name="TRK" title="Track Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Actual track age since occurence
+                    </description>
+                </item>
+                <item name="PSR" title="PSR Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last primary detection used to update the track
+                    </description>
+                </item>
+                <item name="SSR" title="SSR Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last secondary detection used to update the track
+                    </description>
+                </item>
+                <item name="MDS" title="Mode S Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last Mode S detection used to update the track
+                    </description>
+                </item>
+                <item name="ADS" title="ADS-C Age">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">16383.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last ADS-C report used to update the track
+                    </description>
+                </item>
+                <item name="ES" title="ADS-B Extended Squitter Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last 1090 Extended Squitter ADS-B report used to update the track
+                    </description>
+                </item>
+                <item name="VDL" title="ADS-B VDL Mode 4 Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last VDL Mode 4 ADS-B report used to update the track
+                    </description>
+                </item>
+                <item name="UAT" title="ADS-B UAT Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last UAT ADS-B report used to update the track
+                    </description>
+                </item>
+                <item name="LOP" title="Loop Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last magnetic loop detection
+                    </description>
+                </item>
+                <item name="MLT" title="Multilateration Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last MLT detection
+                    </description>
+                </item>
+            </variation>
+            <definition>
+                Ages of the last plot/local track/target report update for each sensor type.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Except for Track Age, the ages are counted from Data Item I062/070,
+                       Time Of Track Information, using the following formula:
+                       Age = Time of track information - Time of last detection used
+                       to update the track
+                    2. The time of last detection is derived from monosensor category time of day
+                    3. If the data has never been received, then the corresponding
+                       subfield is not sent.
+                    4. Maximum value means maximum value or above.
+            </remark>
+        </item>
+        <item name="295" title="Track Data Ages">
+            <variation type="compound">
+                <item name="MFL" title="Measured Flight Level Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode C code or barometric altitude
+                        from ADS-B used to update the track (I062/136).
+                    </description>
+                </item>
+                <item name="MD1" title="Mode 1 Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode 1 code used to update the
+                        track (I062/110).
+                    </description>
+                </item>
+                <item name="MD2" title="Mode 2 Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode 2 code used to update the
+                        track (I062/120).
+                    </description>
+                </item>
+                <item name="MDA" title="Mode 3/A Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode 3/A code used to update the
+                        track (I062/060).
+                    </description>
+                </item>
+                <item name="MD4" title="Mode 4 Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode 4 code used to update the
+                        track.
+                    </description>
+                </item>
+                <item name="MD5" title="Mode 5 Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the last valid and credible Mode 5 code used to update the
+                        track (I062/110).
+                    </description>
+                </item>
+                <item name="MHG" title="Magnetic Heading Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Magnetic Heading&amp;quot;
+                        in item 062/380 (Subfield #3).
+                    </description>
+                </item>
+                <item name="IAS" title="Indicated Airspeed / Mach Nb Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Indicated Airspeed/Mach Number&amp;quot;
+                        in item 062/380 (Subfield #4).
+                    </description>
+                </item>
+                <item name="TAS" title="True Airspeed Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;True Airspeed&amp;quot;
+                        in item 062/380 (Subfield #5).
+                    </description>
+                </item>
+                <item name="SAL" title="Selected Altitude Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Selected Altitude&amp;quot;
+                        in item 062/380 (Subfield #6).
+                    </description>
+                </item>
+                <item name="FSS" title="Final State Selected Altitude Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Final State Selected Altitude Age&amp;quot;
+                        in item 062/380 (Subfield #7).
+                    </description>
+                </item>
+                <item name="TID" title="Trajectory Intent Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Trajectory Intent&amp;quot;
+                        in item 062/380 (Subfield #8).
+                    </description>
+                </item>
+                <item name="COM" title="Communication/ACAS Capability and Flight Status Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP
+                        &amp;quot;Communication/ACAS
+                        Capability and Flight Status&amp;quot;
+                        in item 062/380 (Subfield #10).
+                    </description>
+                </item>
+                <item name="SAB" title="Status Reported by ADS-B Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Status Reported
+                        by ADS-B&amp;quot;
+                        in item 062/380 (Subfield #11).
+                    </description>
+                </item>
+                <item name="ACS" title="ACAS Resolution Advisory Report Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;ACAS Resolution
+                        Advisory Report&amp;quot;
+                        in item 062/380 (Subfield #12).
+                    </description>
+                </item>
+                <item name="BVR" title="Barometric Vertical Rate Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Barometric
+                        Vertical Rate&amp;quot;
+                        in item 062/380 (Subfield #13).
+                    </description>
+                </item>
+                <item name="GVR" title="Geometrical Vertical Rate Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Geometrical
+                        Vertical Rate&amp;quot;
+                        in item 062/380 (Subfield #14).
+                    </description>
+                </item>
+                <item name="RAN" title="Roll Angle Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Roll Angle&amp;quot;
+                        in item 062/380 (Subfield #15).
+                    </description>
+                </item>
+                <item name="TAR" title="Track Angle Rate Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Track Angle
+                        Rate&amp;quot; in item 062/380 (Subfield #16).
+                    </description>
+                </item>
+                <item name="TAN" title="Track Angle Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Track Angle&amp;quot;
+                        in item 062/380 (Subfield #17).
+                    </description>
+                </item>
+                <item name="GSP" title="Ground Speed Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Ground Speed&amp;quot; in item 062/380 (Subfield #18).
+                    </description>
+                </item>
+                <item name="VUN" title="Velocity Uncertainty Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Velocity
+                        Uncertainty&amp;quot; in item 062/380 (Subfield #19).
+                    </description>
+                </item>
+                <item name="MET" title="Meteorological Data Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Meteorological
+                        Data&amp;quot; in item 062/380 (Subfield #20).
+                    </description>
+                </item>
+                <item name="EMC" title="Emitter Category Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Emitter Category&amp;quot;
+                        in item 062/380 (Subfield #21).
+                    </description>
+                </item>
+                <item name="POS" title="Position Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Position&amp;quot;
+                        in item 062/380 (Subfield #23).
+                    </description>
+                </item>
+                <item name="GAL" title="Geometric Altitude Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Geometric
+                        Altitude&amp;quot; in item 062/380 (Subfield #24).
+                    </description>
+                </item>
+                <item name="PUN" title="Position Uncertainty Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Position
+                        Uncertainty&amp;quot; in item 062/380 (Subfield #25).
+                    </description>
+                </item>
+                <item name="MB" title="Mode S MB Data Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Mode S MB
+                        Data&amp;quot; in item 062/380 (Subfield #22).
+                    </description>
+                </item>
+                <item name="IAR" title="Indicated Airspeed Data Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Indicated
+                        Airspeed&amp;quot; in item 062/380 (Subfield #26).
+                    </description>
+                </item>
+                <item name="MAC" title="Mach Number Data Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Mach Number&amp;quot;
+                        in item 062/380 (Subfield #27).
+                    </description>
+                </item>
+                <item name="BPS" title="Barometric Pressure Setting Data Age">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="s">
+                            <constrain type="le">63.75</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Age of the DAP &amp;quot;Barometric
+                        Pressure Setting&amp;quot; in item 062/380
+                        (Subfield #28).
+                    </description>
+                </item>
+            </variation>
+            <definition>
+                Ages of the data provided.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Despite there are now two subfields (#29 and #30) reporting the ages
+                       of, respectively, the Indicated Airspeed track data and the Mach
+                       Number track data, the subfield #8 (and so its presence bit , bit-32) is
+                       kept free in order to prevent a full incompatibility with previous
+                       releases of ASTERIX Cat. 062 already implemented.
+                    2. In all the subfields, the age is the time delay since the value was
+                       measured
+            </remark>
+        </item>
+        <item name="300" title="Vehicle Fleet Identification">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="0">Unknown</value>
+                    <value val="1">ATC equipment maintenance</value>
+                    <value val="2">Airport maintenance</value>
+                    <value val="3">Fire</value>
+                    <value val="4">Bird scarer</value>
+                    <value val="5">Snow plough</value>
+                    <value val="6">Runway sweeper</value>
+                    <value val="7">Emergency</value>
+                    <value val="8">Police</value>
+                    <value val="9">Bus</value>
+                    <value val="10">Tug (push/tow)</value>
+                    <value val="11">Grass cutter</value>
+                    <value val="12">Fuel</value>
+                    <value val="13">Baggage</value>
+                    <value val="14">Catering</value>
+                    <value val="15">Aircraft maintenance</value>
+                    <value val="16">Flyco (follow me)</value>
+                </content>
+            </variation>
+            <definition>
+                Vehicle fleet identification number.
+            </definition>
+        </item>
+        <item name="340" title="Measured Information">
+            <variation type="compound">
+                <item name="SID" title="Sensor Identification">
+                    <variation type="group">
+                        <items>
+                            <item name="SAC" title="System Area Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="SIC" title="System Identification Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="POS" title="Measured Position">
+                    <variation type="group">
+                        <items>
+                            <item name="RHO" title="Measured Distance">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="8" unit="NM">
+                                        <constrain type="le">256</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="THETA" title="Measured Azimuth">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="HEIGHT" title="Measured 3-D Height">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="25" fractional_bits="0" unit="ft">
+                        </content>
+                    </variation>
+                </item>
+                <item name="MDC" title="">
+                    <variation type="group">
+                        <items>
+                            <item name="V" title="Validated">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Code validated</value>
+                                        <value val="1">Code not validated</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="G" title="Garbled">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Default</value>
+                                        <value val="1">Garbled code</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="LMC" title="Last Measured Mode C Code">
+                                <variation type="element" size="14">
+                                    <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="FL">
+                                        <constrain type="ge">-12</constrain>
+                                        <constrain type="le">1270</constrain>
+                                    </content>
+                                </variation>
+                                <description>
+                                    Last Measured Mode C Code, in two&amp;apos;s complement form
+                                </description>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="MDA" title="">
+                    <variation type="group">
+                        <items>
+                            <item name="V" title="Validated">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Code validated</value>
+                                        <value val="1">Code not validated</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="G" title="Garbled">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Default</value>
+                                        <value val="1">Garbled code</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="L" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Mode 3/A code as derived from the reply of the transponder</value>
+                                        <value val="1">Mode 3/A code as provided by a sensor local tracker</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                            <item name="MODE3A" title="Mode-3/A Reply in Octal Representation">
+                                <variation type="element" size="12">
+                                    <content type="string" variation="octal" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="TYP" title="">
+                    <variation type="group">
+                        <items>
+                            <item name="TYP" title="Report Type">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No detection</value>
+                                        <value val="1">Single PSR detection</value>
+                                        <value val="2">Single SSR detection</value>
+                                        <value val="3">SSR + PSR detection</value>
+                                        <value val="4">Single ModeS All-Call</value>
+                                        <value val="5">Single ModeS Roll-Call</value>
+                                        <value val="6">ModeS All-Call + PSR</value>
+                                        <value val="7">ModeS Roll-Call + PSR</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="SIM" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Actual target report</value>
+                                        <value val="1">Simulated target report</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="RAB" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Report from target transponder</value>
+                                        <value val="1">Report from field monitor (item transponder)</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TST" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Real target report</value>
+                                        <value val="1">Test target report</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="2" />
+                        </items>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                All measured data related to the last report used to update the track.
+                These data are not used for ADS-B.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. In case of a plot, the measured bias-corrected polar co-ordinates;
+                    2. In case of a sensor local track, the measured bias-corrected
+                       polar co-ordinates of the plot associated to the track;
+                    3. In case of a local track without detection, the extrapolated
+                       bias-corrected polar co-ordinates.
+                    4. Smoothed MODE 3/A data (L = 1) will be used in case of absence of
+                       MODE 3/A code information in the plot or in case of difference
+                       between plot and sensor local track MODE 3/A code information.
+            </remark>
+        </item>
+        <item name="380" title="Aircraft Derived Data">
+            <variation type="compound">
+                <item name="ADR" title="Target Address">
+                    <variation type="element" size="24">
+                        <raw />
+                    </variation>
+                </item>
+                <item name="ID" title="Target Identification">
+                    <variation type="element" size="48">
+                        <raw />
+                    </variation>
+                    <description>
+                        Characters 1-8 (coded on 6 bits each) defining a target
+                        identification when flight plan is available or the registration
+                        marking when no flight plan is available. Coding rules are
+                        provided in [3] Section 3.1.2.9.1.2 and Table 3-9&amp;quot;
+                    </description>
+                </item>
+                <item name="MHG" title="Magnetic Heading">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                        </content>
+                    </variation>
+                </item>
+                <item name="IAS" title="Indicated Airspeed/Mach No">
+                    <variation type="group">
+                        <items>
+                            <item name="IM" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Air Speed = IAS, LSB (Bit-1) = 2 -14 NM/s</value>
+                                        <value val="1">Air Speed = Mach, LSB (Bit-1) = 0.001</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="IAS" title="">
+                                <variation type="element" size="15">
+                                    <case item="380/IAS/IM">
+                                        <of value="0">
+                                            <content type="quantity" signed="false" scaling="1" fractional_bits="14" unit="NM/s">
+                                            </content>
+                                        </of>
+                                        <of value="1">
+                                            <content type="quantity" signed="false" scaling="0.001" fractional_bits="0" unit="mach">
+                                            </content>
+                                        </of>
+                                    </case>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="TAS" title="True Airspeed">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="kt">
+                            <constrain type="ge">0</constrain>
+                            <constrain type="le">2046</constrain>
+                        </content>
+                    </variation>
+                </item>
+                <item name="SAL" title="Selected Altitude">
+                    <variation type="group">
+                        <items>
+                            <item name="SAS" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No source information provided</value>
+                                        <value val="1">Source information provided</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="SRC" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">Aircraft altitude</value>
+                                        <value val="2">FCU/MCP selected altitude</value>
+                                        <value val="3">FMS selected altitude</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="ALT" title="Altitude in Two&amp;apos;s Complement Form">
+                                <variation type="element" size="13">
+                                    <content type="quantity" signed="true" scaling="25" fractional_bits="0" unit="ft">
+                                        <constrain type="ge">-1300</constrain>
+                                        <constrain type="le">100000</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="FSS" title="Final State Selected Altitude">
+                    <variation type="group">
+                        <items>
+                            <item name="MV" title="Manage Vertical Mode">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not active</value>
+                                        <value val="1">Active</value>
+                                    </content>
+                                </variation>
+                                <description>
+                                    Manage Vertical Mode
+                                </description>
+                            </item>
+                            <item name="AH" title="Altitude Hold">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not active</value>
+                                        <value val="1">Active</value>
+                                    </content>
+                                </variation>
+                                <description>
+                                    Altitude Hold
+                                </description>
+                            </item>
+                            <item name="AM" title="Approach Mode">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not active</value>
+                                        <value val="1">Active</value>
+                                    </content>
+                                </variation>
+                                <description>
+                                    Approach Mode
+                                </description>
+                            </item>
+                            <item name="ALT" title="Altitude in Two&amp;apos;s Complement Form">
+                                <variation type="element" size="13">
+                                    <content type="quantity" signed="true" scaling="25" fractional_bits="0" unit="ft">
+                                        <constrain type="ge">-1300</constrain>
+                                        <constrain type="le">100000</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="TIS" title="Trajectory Intent Status">
+                    <variation type="extended" primary_size="8" extension_size="8">
+                        <items>
+                            <item name="NAV" title="TID Available">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Trajectory intent data is available for this aircraft</value>
+                                        <value val="1">Trajectory intent data is not available for this aircraft</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="NVB" title="TID Valid">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Trajectory intent data is valid</value>
+                                        <value val="1">Trajectory intent data is not valid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="5" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="TID" title="Trajectory Intent Data">
+                    <variation type="repetitive" repetition_size="8">
+                        <variation type="group">
+                            <items>
+                                <item name="TCA" title="TCP Number Availability">
+                                    <variation type="element" size="1">
+                                        <content type="table">
+                                            <value val="0">TCP number available</value>
+                                            <value val="1">TCP number not available</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="NC" title="TCP Compliance">
+                                    <variation type="element" size="1">
+                                        <content type="table">
+                                            <value val="0">TCP compliance</value>
+                                            <value val="1">TCP non-compliance</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="TCPN" title="Trajectory Change Point Number">
+                                    <variation type="element" size="6">
+                                        <raw />
+                                    </variation>
+                                    <description>
+                                        Trajectory change point number
+                                    </description>
+                                </item>
+                                <item name="ALT" title="Altitude in Two&amp;apos;s Complement Form">
+                                    <variation type="element" size="16">
+                                        <content type="quantity" signed="true" scaling="10" fractional_bits="0" unit="ft">
+                                            <constrain type="ge">-1500</constrain>
+                                            <constrain type="le">150000</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="LAT" title="Latitude in WGS.84 in Two&amp;apos;s Complement">
+                                    <variation type="element" size="24">
+                                        <content type="quantity" signed="false" scaling="180" fractional_bits="23" unit="deg">
+                                            <constrain type="ge">-90</constrain>
+                                            <constrain type="le">90</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="LON" title="Longitude in WGS.84 in Two&amp;apos;s Complement">
+                                    <variation type="element" size="24">
+                                        <content type="quantity" signed="false" scaling="180" fractional_bits="23" unit="deg">
+                                            <constrain type="ge">-180</constrain>
+                                            <constrain type="lt">180</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="PT" title="Point Type">
+                                    <variation type="element" size="4">
+                                        <content type="table">
+                                            <value val="0">Unknown</value>
+                                            <value val="1">Fly by waypoint (LT)</value>
+                                            <value val="2">Fly over waypoint (LT)</value>
+                                            <value val="3">Hold pattern (LT)</value>
+                                            <value val="4">Procedure hold (LT)</value>
+                                            <value val="5">Procedure turn (LT)</value>
+                                            <value val="6">RF leg (LT)</value>
+                                            <value val="7">Top of climb (VT)</value>
+                                            <value val="8">Top of descent (VT)</value>
+                                            <value val="9">Start of level (VT)</value>
+                                            <value val="10">Cross-over altitude (VT)</value>
+                                            <value val="11">Transition altitude (VT)</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="TD" title="Turn Direction">
+                                    <variation type="element" size="2">
+                                        <content type="table">
+                                            <value val="0">N/A</value>
+                                            <value val="1">Turn right</value>
+                                            <value val="2">Turn left</value>
+                                            <value val="3">No turn</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="TRA" title="Turn Radius Availability">
+                                    <variation type="element" size="1">
+                                        <content type="table">
+                                            <value val="0">TTR not available</value>
+                                            <value val="1">TTR available</value>
+                                        </content>
+                                    </variation>
+                                    <description>
+                                        Turn Radius Availability
+                                    </description>
+                                </item>
+                                <item name="TOA" title="TOV Available">
+                                    <variation type="element" size="1">
+                                        <content type="table">
+                                            <value val="0">TOV available</value>
+                                            <value val="1">TOV not available</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="TOV" title="Time Over Point">
+                                    <variation type="element" size="24">
+                                        <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="s">
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="TTR" title="TCP Turn Radius">
+                                    <variation type="element" size="16">
+                                        <content type="quantity" signed="false" scaling="0.01" fractional_bits="0" unit="Nm">
+                                            <constrain type="ge">0</constrain>
+                                            <constrain type="le">655.35</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                            </items>
+                        </variation>
+                    </variation>
+                </item>
+                <item name="COM" title="Communications/ACAS Capability and Flight Status">
+                    <variation type="group">
+                        <items>
+                            <item name="COM" title="Communications Capability of the Transponder">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No communications capability (surveillance only)</value>
+                                        <value val="1">Comm. A and Comm. B capability</value>
+                                        <value val="2">Comm. A, Comm. B and Uplink ELM</value>
+                                        <value val="3">Comm. A, Comm. B, Uplink ELM and Downlink ELM</value>
+                                        <value val="4">Level 5 Transponder capability</value>
+                                        <value val="5">Not assigned</value>
+                                        <value val="6">Not assigned</value>
+                                        <value val="7">Not assigned</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="STAT" title="Flight Status">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No alert, no SPI, aircraft airborne</value>
+                                        <value val="1">No alert, no SPI, aircraft on ground</value>
+                                        <value val="2">Alert, no SPI, aircraft airborne</value>
+                                        <value val="3">Alert, no SPI, aircraft on ground</value>
+                                        <value val="4">Alert, SPI, aircraft airborne or on ground</value>
+                                        <value val="5">No alert, SPI, aircraft airborne or on ground</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="2" />
+                            <item name="SSC" title="Specific Service Capability">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No</value>
+                                        <value val="1">Yes</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="ARC" title="Altitude Reporting Capability">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">100 ft resolution</value>
+                                        <value val="1">25 ft resolution</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="AIC" title="Aircraft Identification Capability">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No</value>
+                                        <value val="1">Yes</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="B1A" title="BDS 1,0 Bit 16">
+                                <variation type="element" size="1">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="B1B" title="BDS BDS 1,0 Bits 37/40">
+                                <variation type="element" size="4">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="SAB" title="Status Reported by ADS-B">
+                    <variation type="group">
+                        <items>
+                            <item name="AC" title="ACAS Status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">ACAS not operational</value>
+                                        <value val="2">ACAS operational</value>
+                                        <value val="3">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MN" title="Multiple Navigational Aids Status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">Multiple navigational aids not operating</value>
+                                        <value val="2">Multiple navigational aids operating</value>
+                                        <value val="3">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="DC" title="Differential Correction Status">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">Differential correction</value>
+                                        <value val="2">No differential correction</value>
+                                        <value val="3">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="GBS" title="Ground Bit Set">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Transponder ground bit not set or unknown</value>
+                                        <value val="1">Transponder Ground Bit set</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="6" />
+                            <item name="STAT" title="Flight Status">
+                                <variation type="element" size="3">
+                                    <content type="table">
+                                        <value val="0">No emergency</value>
+                                        <value val="1">General emergency</value>
+                                        <value val="2">Lifeguard / medical</value>
+                                        <value val="3">Minimum fuel</value>
+                                        <value val="4">No communications</value>
+                                        <value val="5">Unlawful interference</value>
+                                        <value val="6">Downed Aircraft</value>
+                                        <value val="7">Unknown</value>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="ACS" title="ACAS Resolution Advisory Report">
+                    <variation type="element" size="56">
+                        <content type="bds">
+                        </content>
+                    </variation>
+                    <description>
+                        Currently active Resolution Advisory (RA), if any, generated
+                        by the ACAS associated with the transponder transmitting the
+                        report and threat identity data.
+                        (MB Data) 56-bit message
+                        conveying Mode S Comm B message data of BDS Register 3,0
+                    </description>
+                </item>
+                <item name="BVR" title="Barometric Vertical Rate">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="6.25" fractional_bits="0" unit="ft/min">
+                        </content>
+                    </variation>
+                    <description>
+                        Barometric Vertical Rate in two&amp;apos;s complement form
+                    </description>
+                </item>
+                <item name="GVR" title="Geometric Vertical Rate">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="6.25" fractional_bits="0" unit="ft/min">
+                        </content>
+                    </variation>
+                    <description>
+                        Geometric Vertical Rate in two&amp;apos;s complement form
+                    </description>
+                </item>
+                <item name="RAN" title="Roll Angle">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="0.01" fractional_bits="0" unit="deg">
+                            <constrain type="ge">-180</constrain>
+                            <constrain type="le">180</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Roll Angle in two&amp;apos;s complement form
+                    </description>
+                </item>
+                <item name="TAR" title="Track Angle Rate">
+                    <variation type="group">
+                        <items>
+                            <item name="TI" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Not available</value>
+                                        <value val="1">Left</value>
+                                        <value val="2">Right</value>
+                                        <value val="3">Straight</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="6" />
+                            <item name="ROT" title="Rate of Turn in Two&amp;apos;s Complement Form">
+                                <variation type="element" size="7">
+                                    <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="deg/s">
+                                        <constrain type="ge">-15</constrain>
+                                        <constrain type="le">15</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="TAN" title="Track Angle">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                        </content>
+                    </variation>
+                </item>
+                <item name="GS" title="Ground Speed">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="14" unit="NM/s">
+                            <constrain type="ge">-2</constrain>
+                            <constrain type="lt">2</constrain>
+                        </content>
+                    </variation>
+                    <description>
+                        Ground Speed in Two&amp;apos;s Complement Form Referenced to WGS84
+                    </description>
+                </item>
+                <item name="VUN" title="Velocity Uncertainty">
+                    <variation type="element" size="8">
+                        <raw />
+                    </variation>
+                </item>
+                <item name="MET" title="Meteorological Data">
+                    <variation type="group">
+                        <items>
+                            <item name="WS" title="Wind Speed Valid Flag">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not valid Wind Speed</value>
+                                        <value val="1">Valid Wind Speed</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="WD" title="Wind Direction Valid Flag">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not valid Wind Direction</value>
+                                        <value val="1">Valid Wind Direction</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TMP" title="Temperature Valid Flag">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not valid Temperature</value>
+                                        <value val="1">Valid Temperature</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TRB" title="Turbolence Valid Flag">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Not valid Turbulence</value>
+                                        <value val="1">Valid Turbulence</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="4" />
+                            <item name="WSD" title="Wind Speed">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="kt">
+                                        <constrain type="ge">0</constrain>
+                                        <constrain type="le">300</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="WDD" title="Wind Direction">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="deg">
+                                        <constrain type="ge">1</constrain>
+                                        <constrain type="le">360</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TMPD" title="Temperature in Degrees Celsius">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="true" scaling="1" fractional_bits="2" unit="degC">
+                                        <constrain type="ge">-100</constrain>
+                                        <constrain type="le">100</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="TRBD" title="Turbulence">
+                                <variation type="element" size="8">
+                                    <content type="integer" signed="false">
+                                        <constrain type="ge">0</constrain>
+                                        <constrain type="le">15</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="EMC" title="Emitter Category">
+                    <variation type="element" size="8">
+                        <content type="table">
+                            <value val="1">Light aircraft =&amp;lt; 7000 kg</value>
+                            <value val="2">Reserved</value>
+                            <value val="3">7000 kg &amp;lt; medium aircraft &amp;lt; 136000 kg</value>
+                            <value val="4">Reserved</value>
+                            <value val="5">136000 kg =&amp;lt; heavy aircraft</value>
+                            <value val="6">Highly manoeuvrable (5g acceleration capability) and high speed (&amp;gt;400 knots cruise)</value>
+                            <value val="7">Reserved</value>
+                            <value val="8">Reserved</value>
+                            <value val="9">Reserved</value>
+                            <value val="10">Rotocraft</value>
+                            <value val="11">Glider / sailplane</value>
+                            <value val="12">Lighter-than-air</value>
+                            <value val="13">Unmanned aerial vehicle</value>
+                            <value val="14">Space / transatmospheric vehicle</value>
+                            <value val="15">Ultralight / handglider / paraglider</value>
+                            <value val="16">Parachutist / skydiver</value>
+                            <value val="17">Reserved</value>
+                            <value val="18">Reserved</value>
+                            <value val="19">Reserved</value>
+                            <value val="20">Surface emergency vehicle</value>
+                            <value val="21">Surface service vehicle</value>
+                            <value val="22">Item ground or tethered obstruction</value>
+                            <value val="23">Reserved</value>
+                            <value val="24">Reserved</value>
+                        </content>
+                    </variation>
+                </item>
+                <item name="POS" title="Position">
+                    <variation type="group">
+                        <items>
+                            <item name="LAT" title="Latitude in WGS.84 in Two&amp;apos;s Complement Form">
+                                <variation type="element" size="24">
+                                    <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                        <constrain type="ge">-90</constrain>
+                                        <constrain type="le">90</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="LON" title="Longitude in WGS.84 in Two&amp;apos;s Complement Form">
+                                <variation type="element" size="24">
+                                    <content type="quantity" signed="true" scaling="180" fractional_bits="23" unit="deg">
+                                        <constrain type="ge">-180</constrain>
+                                        <constrain type="lt">180</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                    <remark>
+                        This corresponds to a resolution of at least 2.4 meters.
+                    </remark>
+                </item>
+                <item name="GAL" title="Geometric Altitude">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="6.25" fractional_bits="0" unit="ft">
+                            <constrain type="ge">-1500</constrain>
+                            <constrain type="le">150000</constrain>
+                        </content>
+                    </variation>
+                </item>
+                <item name="PUN" title="Position Uncertainty">
+                    <variation type="group">
+                        <items>
+                            <spare size="4" />
+                            <item name="PUN" title="Position Uncertainty">
+                                <variation type="element" size="4">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="MB" title="MODE S MB DATA">
+                    <variation type="repetitive" repetition_size="8">
+                        <variation type="element" size="56">
+                            <content type="bds">
+                            </content>
+                        </variation>
+                    </variation>
+                </item>
+                <item name="IAR" title="Indicated Airspeed">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="kt">
+                            <constrain type="ge">0</constrain>
+                            <constrain type="le">1100</constrain>
+                        </content>
+                    </variation>
+                </item>
+                <item name="MAC" title="Mach Number">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="0.008" fractional_bits="0" unit="Mach">
+                            <constrain type="ge">0</constrain>
+                            <constrain type="le">4.096</constrain>
+                        </content>
+                    </variation>
+                </item>
+                <item name="BPS" title="Barometric Pressure Setting (derived from Mode S BDS 4,0)">
+                    <variation type="group">
+                        <items>
+                            <spare size="4" />
+                            <item name="BPS" title="">
+                                <variation type="element" size="12">
+                                    <content type="quantity" signed="false" scaling="0.1" fractional_bits="0" unit="mb">
+                                        <constrain type="ge">0</constrain>
+                                        <constrain type="le">409.5</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                Data derived directly by the aircraft.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. NC is set to one when the aircraft will not fly the path described
+                       by the TCP data.
+                    2. TCP numbers start from zero.
+                    3. LT = Lateral Type
+                    4. VT = Vertical Type
+                    5. TOV gives the estimated time before reaching the point. It is
+                       defined as the absolute time from midnight.
+                    6. TOV is meaningful only if TOA is set to 0
+                    7. Refer to ICAO Draft SARPs for ACAS for detailed explanations.
+                    8. A positive value represents a right turn, whereas a negative value
+                       represents a left turn.
+                    9. Value 15 means 15 degrees/s or above.
+                    10. Velocity uncertainty category of the least accurate velocity component
+                    11. Positive longitude indicates East. Positive latitude indicates North.
+                    12. LSB is required to be thinner than 10 ft by ICAO
+                    13. Only DAPs that can not be encoded into other subfields of this item
+                        should be sent using subfield #25
+                    14. BPS is the barometric pressure setting of the aircraft minus 800 mb.
+            </remark>
+        </item>
+        <item name="390" title="Flight Plan Related Data">
+            <variation type="compound">
+                <item name="TAG" title="FPPS Identification Tag">
+                    <variation type="group">
+                        <items>
+                            <item name="SAC" title="System Area Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="SIC" title="System Identification Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="CS" title="Callsign">
+                    <variation type="element" size="56">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="IFI" title="IFPS_FLIGHT_ID">
+                    <variation type="group">
+                        <items>
+                            <item name="TYP" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Plan Number</value>
+                                        <value val="1">Unit 1 internal flight number</value>
+                                        <value val="2">Unit 2 internal flight number</value>
+                                        <value val="3">Unit 3 internal flight number</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="3" />
+                            <item name="NBR" title="Number from 0 to 99 999 999">
+                                <variation type="element" size="27">
+                                    <content type="integer" signed="false">
+                                        <constrain type="ge">0</constrain>
+                                        <constrain type="le">99999999</constrain>
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="FCT" title="Flight Category">
+                    <variation type="group">
+                        <items>
+                            <item name="GATOAT" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">General Air Traffic</value>
+                                        <value val="2">Operational Air Traffic</value>
+                                        <value val="3">Not applicable</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="FR1FR2" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Instrument Flight Rules</value>
+                                        <value val="1">Visual Flight Rules</value>
+                                        <value val="2">Not applicable</value>
+                                        <value val="3">Controlled Visual Flight Rules</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="RVSM" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Unknown</value>
+                                        <value val="1">Approved</value>
+                                        <value val="2">Exempt</value>
+                                        <value val="3">Not Approved</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="HPR" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">Normal Priority Flight</value>
+                                        <value val="1">High Priority Flight</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="1" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="TAC" title="Type of Aircraft">
+                    <variation type="element" size="32">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="WTC" title="Wake Turbulence Category">
+                    <variation type="element" size="8">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="DEP" title="Departure Airport">
+                    <variation type="element" size="32">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="DST" title="Destination Airport">
+                    <variation type="element" size="32">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="RDS" title="Runway Designation">
+                    <variation type="group">
+                        <items>
+                            <item name="NU1" title="First Number">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="NU2" title="Second Number">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="LTR" title="Letter">
+                                <variation type="element" size="8">
+                                    <content type="string" variation="ascii" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="CFL" title="Current Cleared Flight Level">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="FL">
+                        </content>
+                    </variation>
+                </item>
+                <item name="CTL" title="Current Control Position">
+                    <variation type="group">
+                        <items>
+                            <item name="CENTRE" title="8-bit Group Identification Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                            <item name="POSITION" title="8-bit Control Position Identification Code">
+                                <variation type="element" size="8">
+                                    <raw />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="TOD" title="Time of Departure / Arrival">
+                    <variation type="repetitive" repetition_size="8">
+                        <variation type="group">
+                            <items>
+                                <item name="TYP" title="">
+                                    <variation type="element" size="5">
+                                        <content type="table">
+                                            <value val="0">Scheduled off-block time</value>
+                                            <value val="1">Estimated off-block time</value>
+                                            <value val="2">Estimated take-off time</value>
+                                            <value val="3">Actual off-block time</value>
+                                            <value val="4">Predicted time at runway hold</value>
+                                            <value val="5">Actual time at runway hold</value>
+                                            <value val="6">Actual line-up time</value>
+                                            <value val="7">Actual take-off time</value>
+                                            <value val="8">Estimated time of arrival</value>
+                                            <value val="9">Predicted landing time</value>
+                                            <value val="10">Actual landing time</value>
+                                            <value val="11">Actual time off runway</value>
+                                            <value val="12">Predicted time to gate</value>
+                                            <value val="13">Actual on-block time</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="DAY" title="">
+                                    <variation type="element" size="2">
+                                        <content type="table">
+                                            <value val="0">Today</value>
+                                            <value val="1">Yesterday</value>
+                                            <value val="2">Tomorrow</value>
+                                            <value val="3">Invalid</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <spare size="4" />
+                                <item name="HOR" title="Hours">
+                                    <variation type="element" size="5">
+                                        <content type="integer" signed="false">
+                                            <constrain type="ge">0</constrain>
+                                            <constrain type="le">23</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <spare size="2" />
+                                <item name="MIN" title="Minutes">
+                                    <variation type="element" size="6">
+                                        <content type="integer" signed="false">
+                                            <constrain type="ge">0</constrain>
+                                            <constrain type="le">59</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <item name="AVS" title="Seconds Available Flag">
+                                    <variation type="element" size="1">
+                                        <content type="table">
+                                            <value val="0">Seconds available</value>
+                                            <value val="1">Seconds not available</value>
+                                        </content>
+                                    </variation>
+                                </item>
+                                <spare size="1" />
+                                <item name="SEC" title="Seconds">
+                                    <variation type="element" size="6">
+                                        <content type="integer" signed="false">
+                                            <constrain type="ge">0</constrain>
+                                            <constrain type="le">59</constrain>
+                                        </content>
+                                    </variation>
+                                </item>
+                            </items>
+                        </variation>
+                    </variation>
+                </item>
+                <item name="AST" title="Aircraft Stand">
+                    <variation type="element" size="48">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="STS" title="Stand Status">
+                    <variation type="group">
+                        <items>
+                            <item name="EMP" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Empty</value>
+                                        <value val="1">Occupied</value>
+                                        <value val="2">Unknown</value>
+                                        <value val="3">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="AVL" title="">
+                                <variation type="element" size="2">
+                                    <content type="table">
+                                        <value val="0">Available</value>
+                                        <value val="1">Not available</value>
+                                        <value val="2">Unknown</value>
+                                        <value val="3">Invalid</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <spare size="4" />
+                        </items>
+                    </variation>
+                </item>
+                <item name="STD" title="Standard Instrument Departure">
+                    <variation type="element" size="56">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="STA" title="Standard Instrument Arrival">
+                    <variation type="element" size="56">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+                <item name="PEM" title="Pre-Emergency Mode 3/A">
+                    <variation type="group">
+                        <items>
+                            <spare size="3" />
+                            <item name="VA" title="">
+                                <variation type="element" size="1">
+                                    <content type="table">
+                                        <value val="0">No valid Mode 3/A available</value>
+                                        <value val="1">Valid Mode 3/A available</value>
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="MODE3A" title="Mode-3/A Reply in Octal Representation">
+                                <variation type="element" size="12">
+                                    <content type="string" variation="octal" />
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="PEC" title="Pre-Emergency Callsign">
+                    <variation type="element" size="56">
+                        <content type="string" variation="ascii" />
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                All flight plan related information, provided by ground-based systems.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The up-to-date list of SACs is published on the Eurocontrol Web Site
+                       (http://www.eurocontrol.int).
+                    2. Each one of the seven Octets contains an ASCII Character.
+                       TheCallsign is always left adjusted. It contains up to seven
+                       upper-case alphanumeric characters, the remaining character
+                       positions (if any)are padded with space characters.
+                    3. Each one of the four Octets composing the type of an aircraft
+                       contains an ASCII Character (upper-case alphanumeric characters
+                       with trailing spaces).
+                    4. The types of aircraft are defined in [Ref.4]
+                    5. Each one of the four Octets composing the name of an airport
+                       contains an ASCII Character (upper case alphabetic).
+                    6. The Airport Names are indicated in the ICAO Location Indicators book.
+                    7. Each one of the four Octets composing the name of an airport
+                       contains an ASCII Character (upper case alphabetic).
+                    8. The Airport Names are indicated in the ICAO Location Indicators book.
+                    9. NU1, NU2 and LTR each contain an ASCII character
+                    10. For details refer to.[5] Section 5
+                    11. The centre and the control position identification codes have to be
+                        defined between communication partners.
+                    12. Estimated times are derived from flight plan systems. Predicted
+                        times are derived by the fusion system, based on surveillance
+                        data. For definitions, see [Ref.4]
+                    13. Each one of the six Octets contains an ASCII Character. The Aircraft
+                        Stand identification is always left adjusted. It contains up
+                        to six upper-case alphanumeric characters, the remaining character
+                        positions (if any) are padded with space characters.
+                    14. Each one of the seven Octets contains an ASCII Character.
+                        The SID is always left adjusted. It contains up to seven
+                        alphanumeric characters, the remaining character positions
+                        (if any) are padded with space characters.
+                    15. Each one of the seven Octets contains an ASCII Character.
+                        The STAR is always left adjusted. It contains up to seven
+                        alphanumeric characters, the remaining character positions
+                        (if any) are padded with space characters.
+                    16. This subfield is used only when the aircraft is transmitting
+                        an emergency Mode 3/A code
+                    17. If VA = 0, the content of bits 12/1 is meaningless
+                    18. Each one of the seven Octets contains an ASCII Character.
+                        The Callsign is always left adjusted. It contains up to seven
+                        upper-case alphanumeric characters, the remaining character
+                        positions (if any) are padded with space characters
+                    19. This subfield is used only when an emergency Mode 3/A is associated
+                        with the track (I062/390 Subfield #17)
+            </remark>
+        </item>
+        <item name="500" title="Estimated Accuracies">
+            <variation type="compound">
+                <item name="APC" title="Estimated Accuracy Of Track Position (Cartesian)">
+                    <variation type="group">
+                        <items>
+                            <item name="X" title="APC (X-Component)">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="1" unit="m">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="Y" title="APC (Y-Component)">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="1" unit="m">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="COV" title="XY Covariance Component">
+                    <variation type="element" size="16">
+                        <content type="quantity" signed="true" scaling="1" fractional_bits="1" unit="m">
+                        </content>
+                    </variation>
+                </item>
+                <item name="APW" title="Estimated Accuracy Of Track Position (WGS-84)">
+                    <variation type="group">
+                        <items>
+                            <item name="LAT" title="APW (Latitude Component)">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="180" fractional_bits="25" unit="deg">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="LON" title="APW (Longitude Component)">
+                                <variation type="element" size="16">
+                                    <content type="quantity" signed="false" scaling="180" fractional_bits="25" unit="deg">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="AGA" title="Estimated Accuracy Of Calculated Track Geometric Altitude">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="6.25" fractional_bits="0" unit="ft">
+                        </content>
+                    </variation>
+                </item>
+                <item name="ABA" title="Estimated Accuracy Of Calculated Track Barometric Altitude">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="FL">
+                        </content>
+                    </variation>
+                </item>
+                <item name="ATV" title="Estimated Accuracy Of Track Velocity (Cartesian)">
+                    <variation type="group">
+                        <items>
+                            <item name="X" title="ATV (X-Component)">
+                                <variation type="element" size="8">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="m/s">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="Y" title="ATV (Y-Component)">
+                                <variation type="element" size="8">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="m/s">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="AA" title="Estimated Accuracy Of Acceleration (Cartesian)">
+                    <variation type="group">
+                        <items>
+                            <item name="X" title="AA (X-Component)">
+                                <variation type="element" size="8">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="m/s2">
+                                    </content>
+                                </variation>
+                            </item>
+                            <item name="Y" title="AA (Y-Component)">
+                                <variation type="element" size="8">
+                                    <content type="quantity" signed="false" scaling="1" fractional_bits="2" unit="m/s2">
+                                    </content>
+                                </variation>
+                            </item>
+                        </items>
+                    </variation>
+                </item>
+                <item name="ARC" title="Estimated Accuracy Of Rate Of Climb/Descent">
+                    <variation type="element" size="8">
+                        <content type="quantity" signed="false" scaling="6.25" fractional_bits="0" unit="ft/min">
+                        </content>
+                    </variation>
+                </item>
+            </variation>
+            <definition>
+                Overview of all important accuracies.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Maximum value means maximum value or above.
+                    2. XY covariance component = sign {Cov(X,Y)} * sqrt {abs [Cov (X,Y)]}
+                    3. The maximum value for the (unsigned) XY covariance component is 16.383 km
+                    4. Maximum value means maximum value or above.
+                    5. Maximum value means maximum value or above.
+                    6. Maximum value means maximum value or above.
+                    7. Maximum value means maximum value or above.
+                    8. Maximum value means maximum value or above.
+                    9. Maximum value means maximum value or above.
+            </remark>
+        </item>
+        <item name="510" title="Track Status">
+            <variation type="extended" primary_size="24" extension_size="24">
+                <items>
+                    <item name="MIDENT" title="Master System Unit Identification">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="MTRACK" title="Master System Track Number">
+                        <variation type="element" size="15">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIDENT" title="Slave System Unit Identification">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="STRACK" title="Slave System Track Number">
+                        <variation type="element" size="15">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of a system track.
+            </definition>
+            <remark>
+                Notes:
+
+                    - The composed track number is used by co-operating units to uniquely
+                      identify a track. It consists of the unit identifier and system
+                      track number for each unit involved in the co-operation. The first
+                      unit identification identifies the unit that is responsible for the
+                      track amalgamation.
+            </remark>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>-</item>
+        <item>015</item>
+        <item>070</item>
+        <item>105</item>
+        <item>100</item>
+        <item>185</item>
+        <item>210</item>
+        <item>060</item>
+        <item>245</item>
+        <item>380</item>
+        <item>040</item>
+        <item>080</item>
+        <item>290</item>
+        <item>200</item>
+        <item>295</item>
+        <item>136</item>
+        <item>130</item>
+        <item>135</item>
+        <item>220</item>
+        <item>390</item>
+        <item>270</item>
+        <item>300</item>
+        <item>110</item>
+        <item>120</item>
+        <item>510</item>
+        <item>500</item>
+        <item>340</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>RE</item>
+        <item>SP</item>
+    </uap>
+</category>

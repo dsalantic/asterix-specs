@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="23" edition="1.2">
+    <title>CNS/ATM Ground Station and Service Status Reports</title>
+    <date>2009-03-01</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="000" title="Report Type">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="1">Ground station status report</value>
+                    <value val="2">Service status report</value>
+                    <value val="3">Service statistics report</value>
+                </content>
+            </variation>
+            <definition>
+                This Data Item allows for a more convenient handling of the
+                reports at the receiver side by further defining the type of
+                transaction.
+            </definition>
+            <remark>
+                NOTES:
+                    1. In applications where transactions of various types are exchanged, the
+                       Report Type Data Item facilitates the proper report handling at the
+                       receiver side.
+                    2. All Report Type values are reserved for common standard use.
+            </remark>
+        </item>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the Ground Station from which the data is received.
+            </definition>
+            <remark>
+                Note:
+                    - The up-to-date list of SACs is published on the
+                      EUROCONTROL Web Site (http://www.eurocontrol.int/asterix).
+            </remark>
+        </item>
+        <item name="015" title="Service Type and Identification">
+            <variation type="group">
+                <items>
+                    <item name="SID" title="Service Identification">
+                        <variation type="element" size="4">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="STYP" title="Type of Service">
+                        <variation type="element" size="4">
+                            <content type="table">
+                                <value val="1">ADS-B VDL4</value>
+                                <value val="2">ADS-B Ext Squitter</value>
+                                <value val="3">ADS-B UAT</value>
+                                <value val="4">TIS-B VDL4</value>
+                                <value val="5">TIS-B Ext Squitter</value>
+                                <value val="6">TIS-B UAT</value>
+                                <value val="7">FIS-B VDL4</value>
+                                <value val="8">GRAS VDL4</value>
+                                <value val="9">MLT</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identifies the type of service being reported.
+            </definition>
+            <remark>
+                Note:
+                    - The service identification is allocated by the system.
+                    - The service identification is also available in item I021/015.
+            </remark>
+        </item>
+        <item name="070" title="Time of Day">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping expressed as UTC time.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. The time of day value is reset to zero each day at midnight.
+            </remark>
+        </item>
+        <item name="100" title="Ground Station Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="NOGO" title="Operational Release Status of the Data">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Data is released for operational use</value>
+                                <value val="1">Data must not be used operationally</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ODP" title="Data Processor Overload Indicator">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default, no overload</value>
+                                <value val="1">Overload in DP</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="OXT" title="Ground Interface Data Communications Overload">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default, no overload</value>
+                                <value val="1">Overload in transmission subsystem</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="MSC" title="Monitoring System Connected Status">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Monitoring system not connected or unknown</value>
+                                <value val="1">Monitoring system connected</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="TSV" title="Time Source Validity">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">valid</value>
+                                <value val="1">invalid</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SPO" title="Indication of spoofing attack">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">no spoofing detected</value>
+                                <value val="1">potential spoofing attack</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="RN" title="Renumbering Indication for Track ID">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">default</value>
+                                <value val="1">track numbering has restarted</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="GSSP" title="Ground Station Status Reporting Period">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="s">
+                                <constrain type="ge">1</constrain>
+                                <constrain type="le">127</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the status of a Ground Station.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. A time source is considered as valid when either externally
+                       synchronised or running on a local oscillator within the
+                       required accuracy of UTC.
+                    2. Bit 8 (NOGO), when set to “1” indicates that the data transmitted
+                       by the GS is not released for operational use.
+                    3. Bit 2 indicates that the allocation of Track-IDs (Item I021/161)
+                       was re-started.
+            </remark>
+        </item>
+        <item name="101" title="Service Configuration">
+            <variation type="extended" primary_size="16" extension_size="8">
+                <items>
+                    <item name="RP" title="Report Period for Category 021 Reports">
+                        <variation type="element" size="8">
+                            <content type="quantity" signed="false" scaling="1" fractional_bits="1" unit="s">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="SC" title="Service Class">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">No information</value>
+                                <value val="1">NRA class</value>
+                                <value val="2">reserved for future use</value>
+                                <value val="3">reserved for future use</value>
+                                <value val="4">reserved for future use</value>
+                                <value val="5">reserved for future use</value>
+                                <value val="6">reserved for future use</value>
+                                <value val="7">reserved for future use</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="4" />
+                    <item name="SSSP" title="Service Status Reporting Period">
+                        <variation type="element" size="7">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="s">
+                                <constrain type="ge">1</constrain>
+                                <constrain type="le">127</constrain>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the configuration of a Service.
+            </definition>
+        </item>
+        <item name="110" title="Service Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <spare size="4" />
+                    <item name="STAT" title="Status of the Service">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">Unknown</value>
+                                <value val="1">Failed</value>
+                                <value val="2">Disabled</value>
+                                <value val="3">Degraded</value>
+                                <value val="4">Normal</value>
+                                <value val="5">Initialisation</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the status of the Service provided by a Ground Station.
+            </definition>
+        </item>
+        <item name="120" title="Service Statistics">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="TYPE" title="Type of report counter">
+                            <variation type="element" size="8">
+                                <content type="table">
+                                    <value val="0">Number of unknown messages received</value>
+                                    <value val="1">Number of too old messages received</value>
+                                    <value val="2">Number of failed message conversions</value>
+                                    <value val="3">Total Number of messages received</value>
+                                    <value val="20">Number of TIS-B management messages received</value>
+                                    <value val="21">Number of Basic messages received</value>
+                                    <value val="22">Number of High Dynamic messages received</value>
+                                    <value val="23">Number of Full Position messages received</value>
+                                    <value val="24">Number of Basic Ground  messages received</value>
+                                    <value val="25">Number of TCP messages received</value>
+                                    <value val="26">Number of UTC time  messages received</value>
+                                    <value val="27">Number of Data messages received</value>
+                                    <value val="28">Number of High Resolution messages received</value>
+                                    <value val="29">Number of Aircraft Target Airborne messages received</value>
+                                    <value val="30">Number of Aircraft Target Ground messages received</value>
+                                    <value val="31">Number of Ground Vehicle Target messages received</value>
+                                    <value val="32">Number of 2 slots TCP messages received</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <item name="REF" title="Reference from which the messages are countered">
+                            <variation type="element" size="1">
+                                <content type="table">
+                                    <value val="0">From midnight</value>
+                                    <value val="1">From the last report</value>
+                                </content>
+                            </variation>
+                        </item>
+                        <spare size="7" />
+                        <item name="CV" title="32-bit counter value">
+                            <variation type="element" size="32">
+                                <raw />
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Statistics concerning the service. Provides counts of various ADS-B
+                message types that have been received since the report was last sent.
+            </definition>
+        </item>
+        <item name="200" title="Operational Range">
+            <variation type="element" size="8">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="0" unit="NM">
+                </content>
+            </variation>
+            <definition>
+                Currently active operational range of the Ground Station.
+            </definition>
+            <remark>
+                Notes:
+
+                    1. Maximum value indicates “maximum value or above”.
+            </remark>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>000</item>
+        <item>015</item>
+        <item>070</item>
+        <item>100</item>
+        <item>101</item>
+        <item>200</item>
+        <item>110</item>
+        <item>120</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>RE</item>
+        <item>SP</item>
+    </uap>
+</category>

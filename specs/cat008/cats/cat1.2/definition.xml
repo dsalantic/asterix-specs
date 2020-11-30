@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<category cat="8" edition="1.2">
+    <title>Monoradar Derived Weather Information</title>
+    <date>2014-08-24</date>
+    <preamble>
+        Surveillance data exchange.
+    </preamble>
+    <items>
+        <item name="000" title="Message Type">
+            <variation type="element" size="8">
+                <content type="table">
+                    <value val="1">Polar vector</value>
+                    <value val="2">Cartesian vector of start point/length</value>
+                    <value val="3">Contour record</value>
+                    <value val="4">Cartesian start point and end point vector</value>
+                    <value val="254">SOP message</value>
+                    <value val="255">EOP message</value>
+                </content>
+            </variation>
+            <definition>
+                This Data Item allows for a more convenient handling of the messages
+                at the receiver side by further defining the type of transaction.
+            </definition>
+        </item>
+        <item name="010" title="Data Source Identifier">
+            <variation type="group">
+                <items>
+                    <item name="SAC" title="System Area Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="SIC" title="System Identification Code">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Identification of the radar station from which the data are received.
+            </definition>
+            <remark>
+                Note:
+                    The defined SACs are on the EUROCONTROL ASTERIX website
+                    (www.eurocontrol.int/asterix)
+            </remark>
+        </item>
+        <item name="020" title="Vector Qualifier">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="ORG" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Local coordinates</value>
+                                <value val="1">System coordinates</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="I" title="Intensity Level">
+                        <variation type="element" size="3">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="S" title="Shading Orientation with Respect to North">
+                        <variation type="element" size="3">
+                            <content type="table">
+                                <value val="0">0°</value>
+                                <value val="1">22.5°</value>
+                                <value val="2">45°</value>
+                                <value val="3">67.5°</value>
+                                <value val="4">90°</value>
+                                <value val="5">112.5°</value>
+                                <value val="6">135°</value>
+                                <value val="7">157.5°</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <spare size="5" />
+                    <item name="TST" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Test vector</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="ER" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Default</value>
+                                <value val="1">Error condition encountered</value>
+                            </content>
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Precipitation intensity level, shading orientation of the vectors
+                representing the precipitation area and coordinate system used.
+            </definition>
+            <remark>
+                Note:
+                    For polar vectors bits-4/2 are meaningless and are set to zero.
+            </remark>
+        </item>
+        <item name="034" title="Sequence of Polar Vectors in SPF Notation">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="STR" title="Start Range">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="ENDR" title="End Range">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="AZ" title="Azimuth">
+                            <variation type="element" size="16">
+                                <content type="quantity" signed="false" scaling="360" fractional_bits="16" unit="deg">
+                                </content>
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Sequence of weather vectors in local polar coordinates.
+            </definition>
+            <remark>
+                Note:
+                    f is a parameter of the SOP message.
+            </remark>
+        </item>
+        <item name="036" title="Sequence of Cartesian Vectors in SPF Notation">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="X" title="X-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="Y" title="Y-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="L" title="Length">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Sequence of weather vectors, in the representation start point/length,
+                in local or in system cartesian coordinates.
+            </definition>
+            <remark>
+                Note:
+                    1. LSB of [X, Y, L] is calculated as :math:`2^{-6+f}`.
+                    2. f is a parameter of the SOP message.
+                    3. Negative values are expressed in 2&amp;apos;s complement form, bit-24
+                       and bit-16 are set to 0 for positive values and 1 for negative
+                       values.
+            </remark>
+        </item>
+        <item name="038" title="Sequence of Weather Vectors in SPF Notation">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="X1" title="X1-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="Y1" title="Y1-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="X2" title="X2-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="Y2" title="Y2-Component">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Sequence of weather vectors, in the representation start point/ end
+                point, in local or in system cartesian coordinates.
+            </definition>
+            <remark>
+                Note:
+                    1. LSB of [X1, Y1, X2, Y2] is calculated as :math:`2^{-6+f}`.
+                    2. f is a parameter of the SOP message.
+                    3. Negative values are expressed in 2&amp;apos;s complement form, bits-32,
+                       24, 16 and 8 are set to 0 for positive values and 1 for negative
+                       values.
+            </remark>
+        </item>
+        <item name="040" title="Contour Identifier">
+            <variation type="group">
+                <items>
+                    <item name="ORG" title="">
+                        <variation type="element" size="1">
+                            <content type="table">
+                                <value val="0">Local Coordinates</value>
+                                <value val="1">System Coordinates</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="I" title="Intensity Level">
+                        <variation type="element" size="3">
+                            <raw />
+                        </variation>
+                    </item>
+                    <spare size="2" />
+                    <item name="FSTLST" title="">
+                        <variation type="element" size="2">
+                            <content type="table">
+                                <value val="0">Intermediate record of a contour</value>
+                                <value val="1">Last record of a contour of at least two records</value>
+                                <value val="2">First record of a contour of at least two records</value>
+                                <value val="3">First and only record, fully defining a contour</value>
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="CSN" title="Contour Serial Number">
+                        <variation type="element" size="8">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Contour serial number together with the precipitation intensity levels
+                and the coordinates system used.
+            </definition>
+            <remark>
+                Note:
+                    The Contour Serial Number provides an unambiguous identification
+                    for each contour record. Within one update cycle, a serial number
+                    shall never be assigned twice.
+            </remark>
+        </item>
+        <item name="050" title="Sequence of Contour Points in SPF Notation">
+            <variation type="repetitive" repetition_size="8">
+                <variation type="group">
+                    <items>
+                        <item name="X1" title="">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                        <item name="Y1" title="">
+                            <variation type="element" size="8">
+                                <raw />
+                            </variation>
+                        </item>
+                    </items>
+                </variation>
+            </variation>
+            <definition>
+                Cartesian coordinates of a variable number of points defining a contour.
+            </definition>
+            <remark>
+                Note:
+                    1. LSB of [X1, Y1] is calculated as :math:`2^{-6+f}`.
+                    2. f is a parameter of the SOP message.
+                    3. Negative values are expressed in 2&amp;apos;s complement form, bit-16
+                       and bit-8 shall be set to 0 for positive values and 1 for
+                       negative values.
+            </remark>
+        </item>
+        <item name="090" title="Time of Day">
+            <variation type="element" size="24">
+                <content type="quantity" signed="false" scaling="1" fractional_bits="7" unit="s">
+                </content>
+            </variation>
+            <definition>
+                Absolute time stamping expressed as Coordinated Universal Time (UTC) time.
+            </definition>
+            <remark>
+                Notes:
+                    1. The time of day value is reset to zero each day at midnight.
+                    2. For time management in radar transmission applications, refer
+                       to Part 1, paragraph 5.4 [Ref. 1].
+            </remark>
+        </item>
+        <item name="100" title="Processing Status">
+            <variation type="extended" primary_size="24" extension_size="8">
+                <items>
+                    <item name="F" title="Scaling Factor">
+                        <variation type="element" size="5">
+                            <content type="quantity" signed="true" scaling="1" fractional_bits="0" unit="">
+                            </content>
+                        </variation>
+                    </item>
+                    <item name="R" title="Current Reduction Stage in Use">
+                        <variation type="element" size="3">
+                            <raw />
+                        </variation>
+                    </item>
+                    <item name="Q" title="Processing Parameters">
+                        <variation type="element" size="15">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the scaling factor currently applied, current
+                reduction step in use, etc.
+            </definition>
+            <remark>
+                Note:
+                    f: Scaling factor, negative values are represented in 2&amp;apos;s complement
+                    form, bit-24 is set to 0 for positive values and 1 for negative values.
+                    R: Current reduction stage in use. Normal operation is indicated by a
+                    value of zero. The actual bit signification is application dependent.
+                    Q: Processing parameters. The actual bit signification isapplication dependent.
+            </remark>
+        </item>
+        <item name="110" title="Station Configuration Status">
+            <variation type="extended" primary_size="8" extension_size="8">
+                <items>
+                    <item name="DATA" title="Unspecified Data">
+                        <variation type="element" size="7">
+                            <raw />
+                        </variation>
+                    </item>
+                </items>
+            </variation>
+            <definition>
+                Information concerning the use and status of some vital hardware
+                components of a radar system .
+            </definition>
+            <remark>
+                Note:
+                    Due to the diversity in hardware design and requirements of present
+                    and future radar stations, it is felt impractical to attempt to
+                    define individual bits.
+            </remark>
+        </item>
+        <item name="120" title="Total Number of Items Constituting One Weather Picture">
+            <variation type="element" size="16">
+                <content type="integer" signed="false">
+                </content>
+            </variation>
+            <definition>
+                Total number of vectors, respectively contour points, constituting
+                the total weather image, provided with the EOP message.
+            </definition>
+        </item>
+        <item name="RE" title="Reserved Expansion Field">
+            <variation type="explicit" />
+            <definition>
+                Expansion
+            </definition>
+        </item>
+        <item name="SP" title="Special Purpose Field">
+            <variation type="explicit" />
+            <definition>
+                Special Purpose Field
+            </definition>
+        </item>
+    </items>
+    <uap>
+        <item>010</item>
+        <item>000</item>
+        <item>020</item>
+        <item>036</item>
+        <item>034</item>
+        <item>040</item>
+        <item>050</item>
+        <item>090</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+        <item>038</item>
+        <item>RE</item>
+        <item>SP</item>
+    </uap>
+</category>
